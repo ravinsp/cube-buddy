@@ -1,0 +1,1669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6c5ce7">
+<title>Cube Buddy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1: #dff3ff; --bg2: #fff4d6;
+    --card: #ffffff; --ink: #2d2a4a; --soft: #6b6890;
+    --brand: #6c5ce7; --brand-dark: #4b3cc4;
+    --go: #20bf6b; --go-dark: #148a4c;
+    --warn: #ff9f1a; --bad: #eb3b5a;
+    --line: #e7e4f7;
+    --radius: 22px;
+  }
+  [hidden] { display: none !important; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: 'Fredoka', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--ink);
+    background: linear-gradient(170deg, var(--bg1) 0%, #f3ecff 55%, var(--bg2) 100%) fixed;
+    -webkit-user-select: none; user-select: none;
+    overscroll-behavior: none;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: max(10px, env(safe-area-inset-top)) 16px 6px;
+    max-width: 560px; margin: 0 auto;
+  }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 22px; color: var(--brand-dark); background: none; border: 0; font-family: inherit; padding: 0; cursor: pointer; }
+  .logo .cubeicon { width: 30px; height: 30px; display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 7px; }
+  .logo .cubeicon i { border-radius: 2px; }
+  .iconbtn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #fff; font-size: 20px; box-shadow: 0 3px 0 var(--line); cursor: pointer; }
+  main { max-width: 560px; margin: 0 auto; padding: 0 16px calc(24px + env(safe-area-inset-bottom)); }
+  .screen { display: none; animation: pop .35s ease; }
+  .screen.active { display: block; }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  h1 { font-size: 34px; margin: 4px 0; color: var(--brand-dark); }
+  h2 { font-size: 24px; margin: 14px 0 8px; }
+  p { font-size: 18px; line-height: 1.4; margin: 6px 0; }
+  .small { font-size: 15px; color: var(--soft); }
+
+  /* buttons */
+  .btn {
+    font-family: inherit; font-weight: 600; font-size: 20px; color: #fff;
+    background: var(--brand); border: 0; border-radius: 999px; padding: 14px 26px;
+    box-shadow: 0 5px 0 var(--brand-dark); cursor: pointer; transition: transform .08s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px;
+  }
+  .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--brand-dark); }
+  .btn.go { background: var(--go); box-shadow: 0 5px 0 var(--go-dark); }
+  .btn.go:active { box-shadow: 0 1px 0 var(--go-dark); }
+  .btn.ghost { background: #fff; color: var(--ink); box-shadow: 0 5px 0 var(--line); }
+  .btn.big { font-size: 24px; padding: 16px 30px; min-height: 64px; }
+  .btn.wide { width: 100%; }
+  .btn:disabled { opacity: .5; }
+  .round {
+    width: 64px; height: 64px; border-radius: 50%; border: 0; background: #fff; font-size: 26px;
+    box-shadow: 0 5px 0 var(--line); cursor: pointer; flex: none; font-family: inherit; color: var(--ink);
+  }
+  .round:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line); }
+  .round.small { width: 54px; height: 54px; font-size: 22px; }
+  .link { background: none; border: 0; font-family: inherit; font-size: 17px; color: var(--brand-dark); text-decoration: underline; padding: 12px 4px; cursor: pointer; }
+  .chip { font-family: inherit; font-size: 15px; font-weight: 500; background: #fff; border: 2px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; color: var(--ink); }
+  .row { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 14px 0; }
+  .center { text-align: center; }
+
+  /* home */
+  .hero { text-align: center; padding: 10px 0 4px; }
+  .bot { font-size: 64px; animation: bob 2.4s ease-in-out infinite; display: inline-block; }
+  @keyframes bob { 50% { transform: translateY(-8px) rotate(-4deg); } }
+  .sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .size {
+    background: var(--card); border: 3px solid transparent; border-radius: var(--radius); padding: 14px 6px 12px;
+    box-shadow: 0 6px 0 var(--line); cursor: pointer; font-family: inherit; color: var(--ink);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .size:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--line); }
+  .size b { font-size: 26px; }
+  .size small { font-size: 13px; color: var(--soft); }
+  .minicube { width: 64px; height: 64px; display: grid; gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 9px; }
+  .minicube i { border-radius: 2px; }
+  .tips { background: rgba(255,255,255,.7); border-radius: 16px; padding: 10px 14px; margin-top: 16px; font-size: 15px; }
+  .tips summary { font-weight: 600; cursor: pointer; font-size: 16px; }
+  .tips li { margin: 6px 0; line-height: 1.35; }
+
+  /* scan */
+  .dots { display: flex; justify-content: center; gap: 8px; margin: 4px 0 10px; }
+  .dots span { width: 34px; height: 12px; border-radius: 99px; background: #fff; border: 2px solid var(--line); }
+  .dots span.done { background: var(--go); border-color: var(--go); }
+  .dots span.now { background: var(--brand); border-color: var(--brand); }
+  .guide-row { display: flex; gap: 12px; align-items: center; background: var(--card); border-radius: var(--radius); padding: 10px; box-shadow: 0 5px 0 var(--line); }
+  .guide3d { width: 118px; height: 118px; flex: none; border-radius: 16px; background: #f4f2ff; position: relative; overflow: hidden; }
+  .guide-text { flex: 1; min-width: 0; }
+  .step-no { font-size: 14px; font-weight: 600; color: var(--brand); text-transform: uppercase; letter-spacing: .5px; }
+  .say { font-size: 19px; font-weight: 500; line-height: 1.3; margin: 2px 0 6px; }
+  .cam {
+    position: relative; width: min(100%, 46vh, 460px); aspect-ratio: 1; margin: 14px auto 0;
+    border-radius: 26px; overflow: hidden; background: #1e1b33; box-shadow: 0 6px 0 var(--line);
+  }
+  .cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cam video.mirror { transform: scaleX(-1); }
+  .grid { position: absolute; inset: 11%; display: grid; border: 4px solid #fff; border-radius: 14px; box-shadow: 0 0 0 999px rgba(20,16,40,.35); }
+  .grid div { border: 2px solid rgba(255,255,255,.85); display: grid; place-items: center; transition: background .15s; }
+  .grid div i { width: 36%; height: 36%; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4); background: transparent; }
+  .grid.frozen div i { width: 100%; height: 100%; border-radius: 0; border: 0; box-shadow: none; }
+  .cam-msg { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; color: #fff; font-size: 16px; padding: 8px; background: linear-gradient(transparent, rgba(0,0,0,.55)); }
+  .cam-err { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: #fff; padding: 22px; font-size: 18px; }
+  .scan-actions { display: flex; justify-content: center; align-items: center; gap: 14px; margin: 16px 0 6px; }
+  .snap { min-width: 180px; }
+
+  /* 3d views */
+  .view3d { position: relative; width: 100%; height: min(44vh, 420px); border-radius: var(--radius); background: radial-gradient(circle at 50% 40%, #ffffff 0%, #ece8ff 75%); box-shadow: 0 5px 0 var(--line); overflow: hidden; touch-action: none; }
+  .view3d.tall { height: min(46vh, 440px); }
+  .view3d canvas { display: block; }
+  .viewreset { position: absolute; right: 10px; top: 10px; z-index: 2; }
+  .hint3d { position: absolute; left: 12px; bottom: 10px; font-size: 14px; color: var(--soft); pointer-events: none; }
+  .err { background: #fff0f2; border: 3px solid #ffc2cc; border-radius: 18px; padding: 12px 14px; margin: 12px 0; font-size: 17px; }
+  .err b { color: var(--bad); }
+  .counts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .counts span { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; background: #fff; border-radius: 99px; padding: 3px 8px 3px 4px; }
+  .counts i { width: 18px; height: 18px; border-radius: 5px; border: 1px solid #0002; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+  /* thinking */
+  .think { text-align: center; padding-top: 12vh; }
+  .spin { font-size: 80px; display: inline-block; animation: spin 1.4s cubic-bezier(.6,.1,.4,.9) infinite; }
+  @keyframes spin { 0% { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.15); } 100% { transform: rotate(360deg) scale(1); } }
+
+  /* solve */
+  .topline { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 2px 0 6px; }
+  .stage { font-weight: 600; font-size: 15px; background: var(--brand); color: #fff; border-radius: 99px; padding: 5px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .count { font-weight: 600; font-size: 16px; color: var(--soft); white-space: nowrap; }
+  .bar { height: 12px; background: #fff; border-radius: 99px; overflow: hidden; margin-bottom: 10px; border: 2px solid var(--line); }
+  .bar div { height: 100%; width: 0; background: linear-gradient(90deg, #26de81, #20bf6b); border-radius: 99px; transition: width .3s; }
+  .move-card { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: var(--radius); padding: 12px 14px; margin-top: 12px; box-shadow: 0 5px 0 var(--line); min-height: 92px; }
+  .mv-icon { font-size: 44px; width: 64px; height: 64px; flex: none; display: grid; place-items: center; background: #f6e8ff; border-radius: 18px; color: #b300ff; font-weight: 700; }
+  .mv-text { font-size: 22px; font-weight: 600; line-height: 1.2; }
+  .mv-text em { font-style: normal; color: #b300ff; }
+  .mv-sub { font-size: 16px; color: var(--soft); margin-top: 3px; }
+  .notation { margin-left: auto; align-self: flex-start; font-size: 14px; font-weight: 600; color: var(--soft); background: #f1f0f8; border-radius: 8px; padding: 2px 8px; }
+  .notation:empty { display: none; }
+  .controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 16px; }
+  .controls .btn { flex: 1; max-width: 260px; }
+
+  /* modal */
+  .modal { position: fixed; inset: 0; background: rgba(35,28,70,.5); display: grid; place-items: center; z-index: 50; padding: 16px; animation: fade .2s; }
+  .modal[hidden] { display: none; }
+  @keyframes fade { from { opacity: 0; } }
+  .modal-card { background: #fff; border-radius: 28px; padding: 22px 20px 18px; width: min(100%, 460px); max-height: 90vh; overflow: auto; text-align: center; animation: pop .3s; }
+  .modal-card h2 { margin-top: 0; font-size: 28px; }
+  .modal-card .emoji { font-size: 60px; line-height: 1; }
+  .hold { display: flex; gap: 18px; justify-content: center; margin: 12px 0; }
+  .hold > div { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 16px; }
+  .face { display: grid; gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 8px; width: 84px; height: 84px; }
+  .face i { border-radius: 2px; }
+  .swatch { display: inline-block; width: 18px; height: 18px; border-radius: 5px; vertical-align: -3px; border: 1px solid #0003; }
+  .note { background: #f6e8ff; border-radius: 14px; padding: 10px 12px; font-size: 17px; margin: 10px 0; text-align: left; }
+
+  .toast { position: fixed; left: 50%; top: 18%; transform: translate(-50%, 0) scale(.8); background: #fff; border-radius: 99px; padding: 12px 22px; font-size: 22px; font-weight: 600; box-shadow: 0 8px 30px rgba(60,40,140,.25); opacity: 0; pointer-events: none; transition: all .3s; z-index: 60; white-space: nowrap; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  .confetti { position: fixed; top: -20px; width: 12px; height: 16px; z-index: 70; pointer-events: none; animation: fall linear forwards; border-radius: 3px; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+  .fatal { background: #fff; border-radius: var(--radius); padding: 20px; margin-top: 30px; text-align: center; font-size: 18px; }
+</style>
+</head>
+<body>
+<header>
+  <button class="logo" id="homeBtn" aria-label="Home">
+    <span class="cubeicon"><i style="background:#ffd400"></i><i style="background:#16b04f"></i><i style="background:#e0203a"></i><i style="background:#1664ff"></i><i style="background:#fff"></i><i style="background:#ff7b00"></i><i style="background:#16b04f"></i><i style="background:#e0203a"></i><i style="background:#ffd400"></i></span>
+    Cube Buddy
+  </button>
+  <button class="iconbtn" id="soundBtn" aria-label="Talking on or off">🔊</button>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section class="screen active" id="home">
+    <div class="hero">
+      <div class="bot">🤖</div>
+      <h1>Hi! I'm Cube Buddy</h1>
+      <p>Show me your mixed-up cube and I'll show you how to solve it, one turn at a time!</p>
+    </div>
+    <h2 class="center">Which cube do you have?</h2>
+    <div class="sizes">
+      <button class="size" data-n="3"><span class="minicube" data-n="3"></span><b>3×3</b><small>the classic</small></button>
+      <button class="size" data-n="4"><span class="minicube" data-n="4"></span><b>4×4</b><small>the revenge</small></button>
+      <button class="size" data-n="5"><span class="minicube" data-n="5"></span><b>5×5</b><small>the professor</small></button>
+    </div>
+    <div class="center"><button class="link" id="practiceBtn">🎮 No cube with you? Try a pretend one</button></div>
+    <details class="tips">
+      <summary>👋 Tips for grown-ups</summary>
+      <ul>
+        <li>The camera only works when this page is opened from <b>https://</b> or <b>localhost</b>. Allow camera access when asked.</li>
+        <li>Scan in good, even light. Avoid shiny glare on the stickers. The 🔦 button turns on the flashlight when the phone has one.</li>
+        <li>Keep the cube held the same way up while scanning. The solving pictures use the same hold as the first photo.</li>
+        <li>4×4 and 5×5 solutions are long (a few hundred turns) because they build the cube piece by piece. Take breaks! Your place is shown on the progress bar.</li>
+        <li>The move code in the corner (like <b>R</b>, <b>U'</b>, <b>2R</b>) is standard cube notation for older kids.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- SCAN -->
+  <section class="screen" id="scan">
+    <div class="dots" id="dots"></div>
+    <div class="guide-row">
+      <div class="guide3d" id="guide3d"></div>
+      <div class="guide-text">
+        <div class="step-no" id="scanStepNo">Side 1 of 6</div>
+        <div class="say" id="scanSay"></div>
+        <button class="chip" id="replayGuide">🔁 Show me again</button>
+      </div>
+    </div>
+    <div class="cam" id="cam">
+      <video id="video" playsinline muted autoplay></video>
+      <div class="grid" id="grid"></div>
+      <div class="cam-msg" id="camMsg">Fit the cube inside the squares</div>
+    </div>
+    <div class="scan-actions" id="scanLive">
+      <button class="round small" id="torchBtn" hidden aria-label="Flashlight">🔦</button>
+      <button class="btn big snap" id="snapBtn">📸 Snap!</button>
+      <button class="round small" id="flipCamBtn" aria-label="Switch camera">🔄</button>
+    </div>
+    <div class="scan-actions" id="scanConfirm" hidden>
+      <button class="btn ghost" id="retakeBtn">🔄 Again</button>
+      <button class="btn go" id="keepBtn">👍 Looks right!</button>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="screen" id="review">
+    <h2 id="reviewTitle">Is this your cube?</h2>
+    <p class="small" id="reviewText">Drag the cube to spin it and check the sides.</p>
+    <div class="view3d" id="review3d"><button class="chip viewreset" id="reviewReset">👀 Reset</button><span class="hint3d">👆 drag to spin</span></div>
+    <div class="err" id="reviewErr" hidden></div>
+    <div class="row"><button class="btn go big wide" id="solveBtn">✨ Yes! Solve it</button></div>
+    <p class="small center">A side looks wrong? Scan just that side again:</p>
+    <div class="chips" id="rescanChips"></div>
+    <div class="center"><button class="link" id="restartScanBtn">📷 Scan all sides again</button></div>
+  </section>
+
+  <!-- THINKING -->
+  <section class="screen" id="think">
+    <div class="think">
+      <div class="spin">🧩</div>
+      <h2>Thinking of the moves…</h2>
+      <p class="small">This takes a few seconds.</p>
+    </div>
+  </section>
+
+  <!-- SOLVE -->
+  <section class="screen" id="solve">
+    <div class="topline"><span class="stage" id="stageChip">Let's go!</span><span class="count" id="countTxt"></span></div>
+    <div class="bar"><div id="barFill"></div></div>
+    <div class="view3d tall" id="solve3d"><button class="chip viewreset" id="solveReset">👀 Reset</button></div>
+    <div class="move-card">
+      <div class="mv-icon" id="mvIcon"></div>
+      <div><div class="mv-text" id="mvText"></div><div class="mv-sub" id="mvSub"></div></div>
+      <span class="notation" id="mvNote"></span>
+    </div>
+    <div class="controls">
+      <button class="round" id="prevBtn" aria-label="Back">◀</button>
+      <button class="round" id="againBtn" aria-label="Show again">🔁</button>
+      <button class="btn go big" id="nextBtn">Done! ▶</button>
+    </div>
+    <div class="center"><button class="link" id="lostBtn">😵 I got mixed up</button></div>
+  </section>
+</main>
+
+<div class="modal" id="modal" hidden><div class="modal-card" id="modalCard"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script id="core">
+var CubeCore = (function () {
+  'use strict';
+
+  /* =====================================================================
+     STICKER MODEL (any N)
+     Faces: 0 U, 1 R, 2 F, 3 D, 4 L, 5 B.  Sticker index = face*N*N + row*N + col.
+     Coordinates use integers: stickers sit at -(N-1)..(N-1) step 2, faces at +-N.
+     A move = (axis 0/1/2 = x/y/z, layer 0..N-1 from the negative side,
+               q = quarter turns clockwise as seen from the positive axis).
+     ===================================================================== */
+  const geomCache = {};
+  function geom(N) { return geomCache[N] || (geomCache[N] = makeGeom(N)); }
+
+  function makeGeom(N) {
+    const S = N * N, T = 6 * S;
+    const pos = [], nrm = [], face = new Uint8Array(T), row = new Uint8Array(T), col = new Uint8Array(T);
+    const NRM = [[0, 1, 0], [1, 0, 0], [0, 0, 1], [0, -1, 0], [-1, 0, 0], [0, 0, -1]];
+    for (let f = 0; f < 6; f++) for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      const i = f * S + r * N + c, a = 2 * c - (N - 1), b = 2 * r - (N - 1);
+      pos[i] = [[a, N, b], [N, -b, -a], [a, -b, N], [a, -N, -b], [-N, -b, a], [-a, -b, -N]][f];
+      nrm[i] = NRM[f]; face[i] = f; row[i] = r; col[i] = c;
+    }
+    const key = (p, n) => p.join(',') + '|' + n.join(',');
+    const idx = new Map();
+    for (let i = 0; i < T; i++) idx.set(key(pos[i], nrm[i]), i);
+    const rot = (ax, v) => ax === 0 ? [v[0], v[2], -v[1]] : ax === 1 ? [-v[2], v[1], v[0]] : [v[1], -v[0], v[2]];
+    const clamp = v => Math.max(-(N - 1), Math.min(N - 1, v));
+    const layerOf = v => (clamp(v) + N - 1) / 2;
+    const cub = pos.map(p => p.map(clamp).join(','));
+    const moves = [];
+    for (let ax = 0; ax < 3; ax++) for (let L = 0; L < N; L++) {
+      const d1 = new Int16Array(T);
+      for (let i = 0; i < T; i++) d1[i] = layerOf(pos[i][ax]) === L ? idx.get(key(rot(ax, pos[i]), rot(ax, nrm[i]))) : i;
+      let d = d1;
+      for (let q = 1; q <= 3; q++) {
+        moves[(ax * N + L) * 3 + q - 1] = { ax, L, q, dst: d };
+        const nd = new Int16Array(T);
+        for (let i = 0; i < T; i++) nd[i] = d1[d[i]];
+        d = nd;
+      }
+    }
+    return { N, S, T, pos, nrm, face, row, col, cub, idx, key, moves };
+  }
+
+  const mIdx = (N, ax, L, q) => (ax * N + L) * 3 + q - 1;
+  const invMove = m => { const q = m % 3 + 1; return m - (q - 1) + (3 - q); };
+  const invSeq = seq => seq.slice().reverse().map(invMove);
+
+  function apply(G, s, m) {
+    const d = G.moves[m].dst, o = new Uint8Array(s.length);
+    for (let i = 0; i < s.length; i++) o[d[i]] = s[i];
+    return o;
+  }
+  function applySeq(G, s, seq) { for (const m of seq) s = apply(G, s, m); return s; }
+
+  // Join neighbouring turns of the same layer (R R -> R2, R R' -> nothing)
+  function merge(N, list, get = x => x, make = (m, x) => m) {
+    const out = [];
+    for (const it of list) {
+      const m = get(it), base = m - (m % 3);
+      const top = out.length ? out[out.length - 1] : null;
+      if (top !== null && get(top) - (get(top) % 3) === base) {
+        const q = ((get(top) % 3 + 1) + (m % 3 + 1)) % 4;
+        out.pop();
+        if (q) out.push(make(base + q - 1, top));
+      } else out.push(it);
+    }
+    return out;
+  }
+
+  /* =====================================================================
+     KOCIEMBA TWO-PHASE SOLVER (3x3)
+     ===================================================================== */
+  const K = (function () {
+    // corners URF UFL ULB UBR DFR DLF DBL DRB, edges UR UF UL UB DR DF DL DB FR FL BL BR
+    const CF = [[8, 9, 20], [6, 18, 38], [0, 36, 47], [2, 45, 11], [29, 26, 15], [27, 44, 24], [33, 53, 42], [35, 17, 51]];
+    const EF = [[5, 10], [7, 19], [3, 37], [1, 46], [32, 16], [28, 25], [30, 43], [34, 52], [23, 12], [21, 41], [50, 39], [48, 14]];
+    const CC = [[0, 1, 2], [0, 2, 4], [0, 4, 5], [0, 5, 1], [3, 2, 1], [3, 4, 2], [3, 5, 4], [3, 1, 5]];
+    const EC = [[0, 1], [0, 2], [0, 4], [0, 5], [3, 1], [3, 2], [3, 4], [3, 5], [2, 1], [2, 4], [5, 4], [5, 1]];
+    const Z8 = [0, 0, 0, 0, 0, 0, 0, 0], Z12 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const BASIC = [
+      { cp: [3, 0, 1, 2, 4, 5, 6, 7], co: Z8, ep: [3, 0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11], eo: Z12 },
+      { cp: [4, 1, 2, 0, 7, 5, 6, 3], co: [2, 0, 0, 1, 1, 0, 0, 2], ep: [8, 1, 2, 3, 11, 5, 6, 7, 4, 9, 10, 0], eo: Z12 },
+      { cp: [1, 5, 2, 3, 0, 4, 6, 7], co: [1, 2, 0, 0, 2, 1, 0, 0], ep: [0, 9, 2, 3, 4, 8, 6, 7, 1, 5, 10, 11], eo: [0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0] },
+      { cp: [0, 1, 2, 3, 5, 6, 7, 4], co: Z8, ep: [0, 1, 2, 3, 5, 6, 7, 4, 8, 9, 10, 11], eo: Z12 },
+      { cp: [0, 2, 6, 3, 4, 1, 5, 7], co: [0, 1, 2, 0, 0, 2, 1, 0], ep: [0, 1, 10, 3, 4, 5, 9, 7, 8, 2, 6, 11], eo: Z12 },
+      { cp: [0, 1, 3, 7, 4, 5, 2, 6], co: [0, 0, 1, 2, 0, 0, 2, 1], ep: [0, 1, 2, 11, 4, 5, 6, 10, 8, 9, 3, 7], eo: [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1] }
+    ];
+    function mul(a, b) {
+      const r = { cp: [], co: [], ep: [], eo: [] };
+      for (let i = 0; i < 8; i++) { r.cp[i] = a.cp[b.cp[i]]; r.co[i] = (a.co[b.cp[i]] + b.co[i]) % 3; }
+      for (let i = 0; i < 12; i++) { r.ep[i] = a.ep[b.ep[i]]; r.eo[i] = (a.eo[b.ep[i]] + b.eo[i]) % 2; }
+      return r;
+    }
+    const M18 = [];
+    for (let f = 0; f < 6; f++) { M18[f * 3] = BASIC[f]; M18[f * 3 + 1] = mul(M18[f * 3], BASIC[f]); M18[f * 3 + 2] = mul(M18[f * 3 + 1], BASIC[f]); }
+    const P2 = [0, 1, 2, 4, 7, 9, 10, 11, 13, 16]; // U U2 U' R2 F2 D D2 D' L2 B2
+    const P2SET = new Set(P2);
+
+    const Cnk = (n, k) => { if (k < 0 || k > n) return 0; let r = 1; for (let i = 0; i < k; i++) r = r * (n - i) / (i + 1); return Math.round(r); };
+    const rankPerm = (a) => { const n = a.length; let r = 0; for (let i = 0; i < n; i++) { let c = 0; for (let j = i + 1; j < n; j++) if (a[j] < a[i]) c++; r = r * (n - i) + c; } return r; };
+    const unrankPerm = (r, n) => { const c = []; for (let i = n - 1; i >= 0; i--) { c[i] = r % (n - i); r = Math.floor(r / (n - i)); } const av = []; for (let i = 0; i < n; i++) av.push(i); return c.map(x => av.splice(x, 1)[0]); };
+    const getTwist = co => { let r = 0; for (let i = 0; i < 7; i++) r = r * 3 + co[i]; return r; };
+    const setTwist = t => { const co = []; let s = 0; for (let i = 6; i >= 0; i--) { co[i] = t % 3; s += co[i]; t = Math.floor(t / 3); } co[7] = (3 - s % 3) % 3; return co; };
+    const getFlip = eo => { let r = 0; for (let i = 0; i < 11; i++) r = r * 2 + eo[i]; return r; };
+    const setFlip = t => { const eo = []; let s = 0; for (let i = 10; i >= 0; i--) { eo[i] = t % 2; s += eo[i]; t = Math.floor(t / 2); } eo[11] = s % 2; return eo; };
+    const getSlice = ep => { let a = 0, x = 0; for (let j = 11; j >= 0; j--) if (ep[j] >= 8) { a += Cnk(11 - j, x + 1); x++; } return a; };
+    const setSlice = a => { const ep = new Array(12).fill(-1); let x = 4; for (let j = 0; j < 12; j++) if (a - Cnk(11 - j, x) >= 0) { ep[j] = 8 + (4 - x); a -= Cnk(11 - j, x); x--; } let o = 0; for (let j = 0; j < 12; j++) if (ep[j] < 0) ep[j] = o++; return ep; };
+
+    let T = null;
+    function init() {
+      if (T) return T;
+      const twM = new Uint16Array(2187 * 18), flM = new Uint16Array(2048 * 18), slM = new Uint16Array(495 * 18);
+      for (let t = 0; t < 2187; t++) { const co = setTwist(t); for (let m = 0; m < 18; m++) { const M = M18[m], n = []; for (let i = 0; i < 8; i++) n[i] = (co[M.cp[i]] + M.co[i]) % 3; twM[t * 18 + m] = getTwist(n); } }
+      for (let t = 0; t < 2048; t++) { const eo = setFlip(t); for (let m = 0; m < 18; m++) { const M = M18[m], n = []; for (let i = 0; i < 12; i++) n[i] = (eo[M.ep[i]] + M.eo[i]) % 2; flM[t * 18 + m] = getFlip(n); } }
+      for (let t = 0; t < 495; t++) { const ep = setSlice(t); for (let m = 0; m < 18; m++) { const M = M18[m], n = []; for (let i = 0; i < 12; i++) n[i] = ep[M.ep[i]]; slM[t * 18 + m] = getSlice(n); } }
+      const cpM = new Uint16Array(40320 * 10), udM = new Uint16Array(40320 * 10), spM = new Uint8Array(24 * 10);
+      for (let t = 0; t < 40320; t++) {
+        const p = unrankPerm(t, 8);
+        for (let k = 0; k < 10; k++) {
+          const M = M18[P2[k]], nc = [], ne = [];
+          for (let i = 0; i < 8; i++) { nc[i] = p[M.cp[i]]; ne[i] = p[M.ep[i]]; }
+          cpM[t * 10 + k] = rankPerm(nc); udM[t * 10 + k] = rankPerm(ne);
+        }
+      }
+      for (let t = 0; t < 24; t++) {
+        const p = unrankPerm(t, 4);
+        for (let k = 0; k < 10; k++) { const M = M18[P2[k]], n = []; for (let i = 0; i < 4; i++) n[i] = p[M.ep[8 + i] - 8]; spM[t * 10 + k] = rankPerm(n); }
+      }
+      const bfs = (size, nm, next) => {
+        const d = new Int8Array(size).fill(-1), q = new Int32Array(size);
+        d[0] = 0; q[0] = 0; let h = 0, t = 1;
+        while (h < t) { const x = q[h++], dx = d[x] + 1; for (let m = 0; m < nm; m++) { const y = next(x, m); if (d[y] < 0) { d[y] = dx; q[t++] = y; } } }
+        return d;
+      };
+      const prTS = bfs(2187 * 495, 18, (x, m) => twM[((x / 495) | 0) * 18 + m] * 495 + slM[(x % 495) * 18 + m]);
+      const prFS = bfs(2048 * 495, 18, (x, m) => flM[((x / 495) | 0) * 18 + m] * 495 + slM[(x % 495) * 18 + m]);
+      const prCS = bfs(40320 * 24, 10, (x, m) => cpM[((x / 24) | 0) * 10 + m] * 24 + spM[(x % 24) * 10 + m]);
+      const prES = bfs(40320 * 24, 10, (x, m) => udM[((x / 24) | 0) * 10 + m] * 24 + spM[(x % 24) * 10 + m]);
+      T = { twM, flM, slM, cpM, udM, spM, prTS, prFS, prCS, prES };
+      return T;
+    }
+
+    // facelets: 54 numbers, each 0..5 = the face whose centre has that colour
+    function toCubie(fc) {
+      const c = { cp: [], co: [], ep: [], eo: [] };
+      for (let i = 0; i < 8; i++) {
+        let o = 0; while (o < 3 && fc[CF[i][o]] !== 0 && fc[CF[i][o]] !== 3) o++;
+        if (o === 3) return null;
+        const c1 = fc[CF[i][(o + 1) % 3]], c2 = fc[CF[i][(o + 2) % 3]];
+        const j = CC.findIndex(x => x[0] === fc[CF[i][o]] && x[1] === c1 && x[2] === c2);
+        if (j < 0) return null;
+        c.cp[i] = j; c.co[i] = o;
+      }
+      for (let i = 0; i < 12; i++) {
+        const a = fc[EF[i][0]], b = fc[EF[i][1]];
+        let j = EC.findIndex(x => x[0] === a && x[1] === b);
+        if (j >= 0) { c.ep[i] = j; c.eo[i] = 0; continue; }
+        j = EC.findIndex(x => x[0] === b && x[1] === a);
+        if (j < 0) return null;
+        c.ep[i] = j; c.eo[i] = 1;
+      }
+      return c;
+    }
+    const parity = p => { let s = 0; for (let i = 0; i < p.length; i++) for (let j = i + 1; j < p.length; j++) if (p[j] < p[i]) s++; return s & 1; };
+    function check(c) {
+      if (!c) return 'pieces';
+      if (new Set(c.cp).size !== 8 || new Set(c.ep).size !== 12) return 'pieces';
+      if (c.co.reduce((a, b) => a + b, 0) % 3) return 'twist';
+      if (c.eo.reduce((a, b) => a + b, 0) % 2) return 'flip';
+      if (parity(c.cp) !== parity(c.ep)) return 'parity';
+      return null;
+    }
+
+    // returns {ok, moves:[[face, q]]} or {ok:false, error}
+    function solve(fc, timeLimit = 1000) {
+      const cc = toCubie(fc), err = check(cc);
+      if (err) return { ok: false, error: err };
+      const { twM, flM, slM, cpM, udM, spM, prTS, prFS, prCS, prES } = init();
+      const tw0 = getTwist(cc.co), fl0 = getFlip(cc.eo), sl0 = getSlice(cc.ep);
+      const s1 = [], s2 = [], t0 = Date.now();
+      let best = null, stop = false;
+
+      function p2(cp, ud, sp, depth, togo, lastF) {
+        if (togo === 0) return cp === 0 && ud === 0 && sp === 0;
+        for (let k = 0; k < 10; k++) {
+          const m = P2[k], f = (m / 3) | 0;
+          if (f === lastF || f === lastF - 3) continue;
+          const nc = cpM[cp * 10 + k], nu = udM[ud * 10 + k], ns = spM[sp * 10 + k];
+          if (Math.max(prCS[nc * 24 + ns], prES[nu * 24 + ns]) > togo - 1) continue;
+          s2[depth] = m;
+          if (p2(nc, nu, ns, depth + 1, togo - 1, f)) return true;
+        }
+        return false;
+      }
+      function startP2(d1) {
+        let c = cc;
+        for (let i = 0; i < d1; i++) c = mul(c, M18[s1[i]]);
+        const cp = rankPerm(c.cp), ud = rankPerm(c.ep.slice(0, 8)), sp = rankPerm(c.ep.slice(8).map(x => x - 8));
+        const lastF = d1 ? (s1[d1 - 1] / 3) | 0 : -1;
+        const maxD = Math.min(best ? best.length - 1 - d1 : 99, 18);
+        for (let d2 = Math.max(prCS[cp * 24 + sp], prES[ud * 24 + sp]); d2 <= maxD; d2++) {
+          if (p2(cp, ud, sp, 0, d2, lastF)) {
+            best = s1.slice(0, d1).concat(s2.slice(0, d2));
+            break;
+          }
+        }
+        if (best && Date.now() - t0 > timeLimit) stop = true;
+      }
+      function p1(tw, fl, sl, depth, togo, lastF) {
+        if (togo === 0) {
+          if (tw || fl || sl) return;
+          if (depth > 0 && P2SET.has(s1[depth - 1])) return;
+          startP2(depth); return;
+        }
+        for (let f = 0; f < 6; f++) {
+          if (f === lastF || f === lastF - 3) continue;
+          for (let q = 0; q < 3; q++) {
+            const m = f * 3 + q;
+            const nt = twM[tw * 18 + m], nf = flM[fl * 18 + m], ns = slM[sl * 18 + m];
+            if (Math.max(prTS[nt * 495 + ns], prFS[nf * 495 + ns]) > togo - 1) continue;
+            s1[depth] = m;
+            p1(nt, nf, ns, depth + 1, togo - 1, f);
+            if (stop) return;
+          }
+        }
+      }
+      for (let d1 = 0; d1 <= 20 && !stop && !(best && d1 >= best.length); d1++) p1(tw0, fl0, sl0, 0, d1, -1);
+      if (!best) return { ok: false, error: 'nosolution' };
+      return { ok: true, moves: best.map(m => [(m / 3) | 0, m % 3 + 1]) };
+    }
+    return { init, solve, CF, EF };
+  })();
+
+  // Kociemba face turn -> our move on an N cube (outer layers only)
+  function faceMove(N, f, q) {
+    return [mIdx(N, 1, N - 1, q), mIdx(N, 0, N - 1, q), mIdx(N, 2, N - 1, q),
+            mIdx(N, 1, 0, 4 - q), mIdx(N, 0, 0, 4 - q), mIdx(N, 2, 0, 4 - q)][f];
+  }
+  // 3x3 facelet index -> N cube sticker index (corner / middle-ish / corner)
+  function map3(N, i) {
+    const f = (i / 9) | 0, r = ((i % 9) / 3) | 0, c = i % 3, mid = N >> 1;
+    const R = r === 0 ? 0 : r === 2 ? N - 1 : mid, C = c === 0 ? 0 : c === 2 ? N - 1 : mid;
+    return f * N * N + R * N + C;
+  }
+
+  /* =====================================================================
+     PIECES: corners, centre orbits, wing slots
+     ===================================================================== */
+  const pieceCache = {};
+  function pieces(G) {
+    if (pieceCache[G.N]) return pieceCache[G.N];
+    const N = G.N, T = G.T;
+    const corners = K.CF.map(t => t.map(i => map3(N, i)));
+    // union-find to discover orbits
+    const par = new Int16Array(T); for (let i = 0; i < T; i++) par[i] = i;
+    const find = x => { while (par[x] !== x) x = par[x] = par[par[x]]; return x; };
+    for (let ax = 0; ax < 3; ax++) for (let L = 0; L < N; L++) { const d = G.moves[mIdx(N, ax, L, 1)].dst; for (let i = 0; i < T; i++) par[find(i)] = find(d[i]); }
+    const inner = v => v > 0 && v < N - 1;
+    const mid = N % 2 ? (N - 1) / 2 : -1;
+    const centerOrbits = [], orbitByRoot = new Map();
+    const isCenter = new Uint8Array(T);
+    for (let i = 0; i < T; i++) {
+      if (!(inner(G.row[i]) && inner(G.col[i]))) continue;
+      isCenter[i] = 1;
+      if (G.row[i] === mid && G.col[i] === mid) continue;
+      const r = find(i);
+      if (!orbitByRoot.has(r)) { orbitByRoot.set(r, centerOrbits.length); centerOrbits.push({ slots: [], slotOf: new Int16Array(T).fill(-1) }); }
+      const o = centerOrbits[orbitByRoot.get(r)];
+      o.slotOf[i] = o.slots.length; o.slots.push([i]);
+    }
+    // wings: edge cubies that are not the middle edge of an odd cube
+    const byCub = new Map();
+    for (let i = 0; i < T; i++) { const k = G.cub[i]; if (!byCub.has(k)) byCub.set(k, []); byCub.get(k).push(i); }
+    const isWing = i => { const e = inner(G.row[i]) !== inner(G.col[i]); if (!e) return false; const v = inner(G.row[i]) ? G.row[i] : G.col[i]; return v !== mid; };
+    const wingOrbits = [], seenCub = new Set();
+    for (let i = 0; i < T; i++) {
+      if (!isWing(i) || seenCub.has(G.cub[i])) continue;
+      const o = { slots: [], slotOf: new Int16Array(T).fill(-1) };
+      const add = sl => { seenCub.add(G.cub[sl[0]]); o.slotOf[sl[0]] = o.slots.length; o.slotOf[sl[1]] = o.slots.length; o.slots.push(sl); };
+      add(byCub.get(G.cub[i]).slice());
+      for (let h = 0; h < o.slots.length; h++) {
+        const sl = o.slots[h];
+        for (let m = 0; m < G.moves.length; m += 3) {
+          const d = G.moves[m].dst, im = [d[sl[0]], d[sl[1]]];
+          if (!seenCub.has(G.cub[im[0]])) add(im);
+        }
+      }
+      wingOrbits.push(o);
+    }
+    return (pieceCache[N] = { corners, centerOrbits, wingOrbits, isCenter });
+  }
+
+  /* =====================================================================
+     COMMUTATOR LIBRARY: pure 3-cycles found by trying simple patterns
+     [X Y X', Z] and [X, Y Z Y'].  Centre cycles may disturb edges/corners;
+     wing cycles must leave every centre alone.
+     ===================================================================== */
+  const libCache = {};
+  function libs(G) {
+    if (libCache[G.N]) return libCache[G.N];
+    const N = G.N, T = G.T, P = pieces(G), mid = N % 2 ? (N - 1) / 2 : -1;
+    const inner = [], outer = [], all = [];
+    for (let ax = 0; ax < 3; ax++) for (let L = 0; L < N; L++) for (let q = 1; q <= 3; q++) {
+      if (L === mid) continue;
+      const m = mIdx(N, ax, L, q); all.push(m);
+      (L === 0 || L === N - 1 ? outer : inner).push(m);
+    }
+    const cOrbitOf = new Int8Array(T).fill(-1);
+    P.centerOrbits.forEach((o, k) => o.slots.forEach(s => cOrbitOf[s[0]] = k));
+    const W = P.wingOrbits[0];
+    const centerLib = P.centerOrbits.map(o => new Array(o.slots.length * o.slots.length));
+    const wingLib = W ? new Array(W.slots.length * W.slots.length) : null;
+    const seen = new Set();
+    const net = new Int16Array(T);
+    const keepOuter = new Uint8Array(T); // odd cubes: corners + middle edges must stay put in wing cycles
+    if (N % 2) for (let i = 0; i < T; i++) if (!P.isCenter[i] && !(W && W.slotOf[i] >= 0)) keepOuter[i] = 1;
+    const add = (lib, M, x, y, z, seq, tag) => {
+      const k = tag + ':' + [x, y, z].sort((a, b) => a - b).join(',') + ':' + (x < y ? 1 : 0) + (y < z ? 1 : 0) + (z < x ? 1 : 0);
+      if (seen.has(k)) return;
+      seen.add(k);
+      for (const [a, b, c] of [[x, y, z], [y, z, x], [z, x, y]]) (lib[a * M + b] || (lib[a * M + b] = [])).push([c, seq]);
+    };
+    const test = seq => {
+      for (let i = 0; i < T; i++) net[i] = i;
+      for (const m of seq) { const d = G.moves[m].dst; for (let i = 0; i < T; i++) net[i] = d[net[i]]; }
+      const cm = []; let wm = 0, ko = 0;
+      for (let i = 0; i < T; i++) if (net[i] !== i) {
+        if (P.isCenter[i]) { cm.push(i); if (cm.length > 3) return; }
+        else if (W && W.slotOf[i] >= 0) wm++;
+        else if (keepOuter[i]) ko = 1;
+      }
+      if (cm.length === 3) {
+        const o = cOrbitOf[cm[0]];
+        if (o < 0 || cOrbitOf[cm[1]] !== o || cOrbitOf[cm[2]] !== o) return;
+        const x = cm[0], y = net[x], z = net[y];
+        if (net[z] !== x) return;
+        const O = P.centerOrbits[o];
+        add(centerLib[o], O.slots.length, O.slotOf[x], O.slotOf[y], O.slotOf[z], merge(N, seq), 'c' + o);
+      } else if (cm.length === 0 && wm === 6 && W && !ko) {
+        const moved = [];
+        W.slots.forEach((s, k) => { if (net[s[0]] !== s[0]) moved.push(k); });
+        if (moved.length !== 3) return;
+        const x = moved[0], y = W.slotOf[net[W.slots[x][0]]], z = W.slotOf[net[W.slots[y][0]]];
+        if (W.slotOf[net[W.slots[z][0]]] !== x) return;
+        for (const k of [x, y, z]) { const t = W.slotOf[net[W.slots[k][0]]]; if (net[W.slots[k][1]] !== W.slots[t][1]) return; }
+        add(wingLib, W.slots.length, x, y, z, merge(N, seq), 'w');
+      }
+    };
+    for (const X of inner) {
+      const Xi = invMove(X);
+      for (const Y of outer) for (const Z of all) {
+        if (G.moves[Z].ax === G.moves[X].ax && G.moves[Z].L === G.moves[X].L) continue;
+        test([X, Y, Xi, Z, X, invMove(Y), Xi, invMove(Z)]);
+      }
+      for (const Y of all) for (const Z of outer) {
+        if (G.moves[Y].ax === G.moves[Z].ax) continue;
+        test([X, Y, Z, invMove(Y), Xi, Y, invMove(Z), invMove(Y)]);
+      }
+    }
+    return (libCache[N] = { centerLib, wingLib, all, inner, outer });
+  }
+
+  /* =====================================================================
+     BIG CUBE SOLVER (4x4, 5x5): centres -> edges -> finish as a 3x3
+     ===================================================================== */
+  function sameAxisSkip(G, m, last) {
+    if (last < 0) return false;
+    const a = G.moves[m], b = G.moves[last];
+    return a.ax === b.ax && a.L <= b.L; // same layer twice, or commuting order already covered
+  }
+
+  // Small brute-force search: solve slot `tgt` without breaking `locked` stickers
+  function direct(G, s, tgt, locked, moves, maxD) {
+    const F = G.face, path = [];
+    const ok = st => { for (const x of tgt) if (st[x] !== F[x]) return false; for (const x of locked) if (st[x] !== F[x]) return false; return true; };
+    const dfs = (st, d, last) => {
+      if (d === 0) return ok(st);
+      for (const m of moves) {
+        if (sameAxisSkip(G, m, last)) continue;
+        path.push(m);
+        if (dfs(apply(G, st, m), d - 1, m)) return true;
+        path.pop();
+      }
+      return false;
+    };
+    for (let d = 1; d <= maxD; d++) if (dfs(s, d, -1)) return path.slice();
+    return null;
+  }
+
+  // Setup moves (depth 0..2) and where they send each slot of an orbit
+  function setupsFor(G, orb, moves) {
+    if (orb._setups) return orb._setups;
+    const M = orb.slots.length;
+    const sigOf = (prev, m) => { const d = G.moves[m].dst, r = new Int16Array(M); for (let k = 0; k < M; k++) r[k] = orb.slotOf[d[orb.slots[prev[k]][0]]]; return r; };
+    const id = new Int16Array(M); for (let k = 0; k < M; k++) id[k] = k;
+    const L0 = [{ seq: [], sig: id }], L1 = [], L2 = [];
+    for (const m of moves) L1.push({ seq: [m], sig: sigOf(id, m), last: m });
+    for (const a of L1) for (const m of moves) { if (sameAxisSkip(G, m, a.last)) continue; L2.push({ seq: [a.seq[0], m], sig: sigOf(a.sig, m), last: m }); }
+    return (orb._setups = { levels: [L0, L1, L2], sigOf });
+  }
+
+  // Move one correct piece into slot t with a conjugated 3-cycle: setup + cycle + undo setup
+  function commSearch(G, s, orb, t, lockedFlag, lib, moves) {
+    const M = orb.slots.length, F = G.face;
+    const fitsAt = (k, j) => { const a = orb.slots[k], b = orb.slots[j]; for (let i = 0; i < a.length; i++) if (s[a[i]] !== F[b[i]]) return false; return true; };
+    const srcs = [];
+    for (let k = 0; k < M; k++) if (k !== t && fitsAt(k, t)) srcs.push(k);
+    if (!srcs.length) return null;
+    const { levels, sigOf } = setupsFor(G, orb, moves);
+    const inv = new Int16Array(M);
+    let best = null, bestLen = 1e9;
+    const tryOne = (seq, sig) => {
+      for (let k = 0; k < M; k++) inv[sig[k]] = k;
+      const yy = sig[t];
+      for (const sk of srcs) {
+        const list = lib[sig[sk] * M + yy];
+        if (!list) continue;
+        for (const [z, cs] of list) {
+          const q = inv[z];
+          if (lockedFlag[q] && !fitsAt(t, q)) continue;
+          if (lockedFlag[sk] && !fitsAt(q, sk)) continue;
+          const len = cs.length + 2 * seq.length;
+          if (len < bestLen) { bestLen = len; best = seq.concat(cs, invSeq(seq)); }
+        }
+      }
+    };
+    for (let d = 0; d <= 2; d++) { for (const e of levels[d]) tryOne(e.seq, e.sig); if (best) return best; }
+    for (const e of levels[2]) for (const m of moves) {   // rare: depth 3
+      if (sameAxisSkip(G, m, e.last)) continue;
+      tryOne(e.seq.concat([m]), sigOf(e.sig, m));
+      if (best) return best;
+    }
+    return null;
+  }
+
+  function permParity(p) { const seen = new Uint8Array(p.length); let s = 0; for (let i = 0; i < p.length; i++) { if (seen[i]) continue; let j = i, len = 0; while (!seen[j]) { seen[j] = 1; j = p[j]; len++; } s += len - 1; } return s & 1; }
+
+  function wingParity(G, s, W) {
+    const F = G.face, home = new Map();
+    W.slots.forEach((sl, k) => home.set(F[sl[0]] + ',' + F[sl[1]], k));
+    const p = W.slots.map(sl => home.get(s[sl[0]] + ',' + s[sl[1]]));
+    if (p.some(x => x === undefined) || new Set(p).size !== p.length) return -1;
+    return permParity(p);
+  }
+  function cornerParity(G, s, corners) {
+    const F = G.face, home = new Map();
+    corners.forEach((c, k) => home.set(c.map(i => F[i]).sort().join(), k));
+    return permParity(corners.map(c => home.get(c.map(i => s[i]).sort().join())));
+  }
+
+  // "r2 B2 U2 l U2 r' U2 r U2 F2 r F2 l' B2 r2": swaps two wings, keeps centres
+  function parityAlg(N) {
+    const tok = "r2 B2 U2 l U2 r' U2 r U2 F2 r F2 l' B2 r2".split(' ');
+    return tok.map(t => {
+      const q = t.length > 1 ? (t[1] === '2' ? 2 : 3) : 1;
+      switch (t[0]) {
+        case 'r': return mIdx(N, 0, N - 2, q);
+        case 'l': return mIdx(N, 0, 1, 4 - q);
+        case 'U': return mIdx(N, 1, N - 1, q);
+        case 'F': return mIdx(N, 2, N - 1, q);
+        case 'B': return mIdx(N, 2, 0, 4 - q);
+      }
+    });
+  }
+
+  function solveBig(G, st) {
+    const N = G.N, F = G.face, P = pieces(G), Lb = libs(G);
+    let s = st;
+    const out = [];
+    const push = (seq, stage) => { for (const m of seq) { s = apply(G, s, m); out.push([m, stage]); } };
+
+    // Stage 1: centres, face by face
+    const faceOrder = [0, 3, 2, 1, 5, 4];
+    const cslots = [];
+    for (const f of faceOrder) P.centerOrbits.forEach((o, oi) => o.slots.forEach((sl, k) => { if (F[sl[0]] === f) cslots.push({ oi, k, x: sl[0] }); }));
+    const cLocked = [], cFlag = P.centerOrbits.map(o => new Uint8Array(o.slots.length));
+    const perFace = cslots.length / 6;
+    for (let n = 0; n < cslots.length; n++) {
+      const c = cslots[n];
+      if (s[c.x] !== F[c.x]) {
+        let seq = direct(G, s, [c.x], cLocked, Lb.all, n < perFace * 2 ? 3 : 2);
+        if (!seq) seq = commSearch(G, s, P.centerOrbits[c.oi], c.k, cFlag[c.oi], Lb.centerLib[c.oi], Lb.all);
+        if (!seq) throw new Error('centre stuck');
+        push(seq, 1);
+      }
+      cLocked.push(c.x); cFlag[c.oi][c.k] = 1;
+    }
+
+    // Outer 3x3 (corners + middle edges). Even cubes do this last, odd cubes before the wings.
+    const solve3 = () => {
+      const fc = []; for (let i = 0; i < 54; i++) fc[i] = s[map3(N, i)];
+      const r = K.solve(fc);
+      if (!r.ok) throw new Error('3x3:' + r.error);
+      push(r.moves.map(([f, q]) => faceMove(N, f, q)), 3);
+    };
+    if (N % 2) solve3();
+
+    // Stage 2: edges. Fix parity first so every remaining swap is a 3-cycle.
+    const W = P.wingOrbits[0];
+    const wp = wingParity(G, s, W);
+    if (wp < 0) throw new Error('edges');
+    if (wp === 1) push(parityAlg(N), 2);
+    if (N % 2 === 0 && cornerParity(G, s, P.corners) === 1) push([mIdx(N, 1, N - 1, 1)], 2);
+
+    const edgeOrder = ['0,2', '0,1', '0,5', '0,4', '1,2', '2,4', '1,5', '4,5', '2,3', '1,3', '3,5', '3,4'];
+    const wOrder = W.slots.map((sl, k) => k).sort((a, b) => {
+      const ka = edgeOrder.indexOf([F[W.slots[a][0]], F[W.slots[a][1]]].sort().join());
+      const kb = edgeOrder.indexOf([F[W.slots[b][0]], F[W.slots[b][1]]].sort().join());
+      return ka - kb || a - b;
+    });
+    const wDirect = N % 2 ? [] : Lb.outer.filter(m => G.moves[m].q === 2);
+    const wLocked = [], wFlag = new Uint8Array(W.slots.length);
+    for (const k of wOrder) {
+      const sl = W.slots[k];
+      if (s[sl[0]] !== F[sl[0]] || s[sl[1]] !== F[sl[1]]) {
+        let seq = wDirect.length ? direct(G, s, sl, wLocked, wDirect, 3) : null;
+        if (!seq) seq = commSearch(G, s, W, k, wFlag, Lb.wingLib, Lb.all);
+        if (!seq) throw new Error('edge stuck');
+        push(seq, 2);
+      }
+      wLocked.push(sl[0], sl[1]); wFlag[k] = 1;
+    }
+
+    if (N % 2 === 0) solve3();
+    return out;
+  }
+
+  /* =====================================================================
+     PUBLIC: solve(N, colours) where colours[i] = colour id 0..5 of sticker i
+     ===================================================================== */
+  function perms(a) { if (a.length <= 1) return [a]; const r = []; a.forEach((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(p => r.push([x].concat(p)))); return r; }
+
+  function solve(N, colors) {
+    const G = geom(N), P = pieces(G), S = G.S, T = G.T;
+    const cnt = [0, 0, 0, 0, 0, 0];
+    for (const c of colors) { if (!(c >= 0 && c < 6)) return { ok: false, error: 'count' }; cnt[c]++; }
+    if (cnt.some(c => c !== S)) return { ok: false, error: 'count', counts: cnt };
+
+    // Which colour belongs on which face? Corners decide (and must be real corners).
+    const homeKeys = new Map();
+    P.corners.forEach((c, k) => { const f = c.map(i => G.face[i]); for (let r = 0; r < 3; r++) homeKeys.set([f[r], f[(r + 1) % 3], f[(r + 2) % 3]].join(), k); });
+    const cornersOk = a => {
+      const used = new Set();
+      for (const c of P.corners) { const k = homeKeys.get(c.map(i => a[colors[i]]).join()); if (k === undefined || used.has(k)) return false; used.add(k); }
+      return true;
+    };
+    let assign = null;
+    if (N % 2) {
+      const mid = (N - 1) / 2, a = [-1, -1, -1, -1, -1, -1];
+      for (let f = 0; f < 6; f++) { const c = colors[f * S + mid * N + mid]; if (a[c] >= 0) return { ok: false, error: 'centres' }; a[c] = f; }
+      if (!cornersOk(a)) return { ok: false, error: 'corners' };
+      assign = a;
+    } else {
+      let bestScore = -1;
+      for (const a of perms([0, 1, 2, 3, 4, 5])) {
+        if (!cornersOk(a)) continue;
+        let sc = 0;
+        for (let i = 0; i < T; i++) if (P.isCenter[i] && a[colors[i]] === G.face[i]) sc++;
+        if (sc > bestScore) { bestScore = sc; assign = a; }
+      }
+      if (!assign) return { ok: false, error: 'corners' };
+    }
+    const st = new Uint8Array(T);
+    for (let i = 0; i < T; i++) st[i] = assign[colors[i]];
+    const faceColor = []; assign.forEach((f, c) => faceColor[f] = c);
+
+    let moves;
+    try {
+      if (N === 3) {
+        const r = K.solve(Array.from(st));
+        if (!r.ok) return { ok: false, error: r.error };
+        moves = r.moves.map(([f, q]) => [faceMove(N, f, q), 0]);
+      } else {
+        if (wingParity(G, st, P.wingOrbits[0]) < 0) return { ok: false, error: 'edges' };
+        moves = solveBig(G, st);
+      }
+    } catch (e) {
+      const m = String(e.message || e);
+      return { ok: false, error: m.startsWith('3x3') ? m.slice(4) : m === 'edges' ? 'edges' : 'internal', detail: m };
+    }
+    moves = merge(N, moves, x => x[0], (m, x) => [m, x[1]]);
+    const end = applySeq(G, st, moves.map(x => x[0]));
+    for (let i = 0; i < T; i++) if (end[i] !== G.face[i]) return { ok: false, error: 'internal', detail: 'verify' };
+    return {
+      ok: true, faceColor, state: Array.from(st),
+      moves: moves.map(([m, stage]) => { const mv = G.moves[m]; return [mv.ax, mv.L, mv.q, stage]; })
+    };
+  }
+
+  return { geom, apply, applySeq, mIdx, solve, warm: () => K.init(), _K: K, _pieces: pieces, _libs: libs, _parityAlg: parityAlg, _wingParity: wingParity, _cornerParity: cornerParity };
+})();
+
+
+</script>
+<script>
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s);
+  const C = CubeCore;
+
+  if (!window.THREE) {
+    $('main').innerHTML = '<div class="fatal">😿 Cube Buddy needs the internet the first time it opens.<br>Please connect and reload the page.</div>';
+    return;
+  }
+
+  /* ---------- colours ---------- */
+  const HEX = { white: '#f4f4ef', yellow: '#ffd400', red: '#e0203a', orange: '#ff7b00', blue: '#1664ff', green: '#16b04f' };
+  const NAMES = Object.keys(HEX);
+  const WORD = { white: 'white', yellow: 'yellow', red: 'red', orange: 'orange', blue: 'blue', green: 'green' };
+  // typical camera colours in Lab, used only to name the groups
+  const REF = { white: [92, 0, 3], yellow: [84, -4, 72], red: [46, 58, 34], orange: [63, 38, 62], blue: [42, 12, -52], green: [62, -48, 34] };
+  const GRAY = '#cfd3dc';
+
+  function rgb2lab(c) {
+    const f = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    const R = f(c[0]), G = f(c[1]), B = f(c[2]);
+    const X = (R * 0.4124 + G * 0.3576 + B * 0.1805) / 0.95047, Y = R * 0.2126 + G * 0.7152 + B * 0.0722, Z = (R * 0.0193 + G * 0.1192 + B * 0.9505) / 1.08883;
+    const h = t => t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116;
+    const fx = h(X), fy = h(Y), fz = h(Z);
+    return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
+  }
+  // brightness matters less than colour: shadows and glare change it a lot
+  const dist = (a, b) => 0.35 * (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+
+  // quick guess for the live preview dots
+  function quickName(c) {
+    const r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+    const s = mx ? d / mx : 0;
+    if (s < 0.25 && mx > 0.35) return 'white';
+    let h = 0;
+    if (d) h = mx === r ? 60 * (((g - b) / d) % 6) : mx === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4);
+    if (h < 0) h += 360;
+    if (h < 14 || h >= 320) return 'red';
+    if (h < 40) return 'orange';
+    if (h < 75) return 'yellow';
+    if (h < 170) return 'green';
+    if (h < 265) return 'blue';
+    return 'red';
+  }
+
+  function permutations(a) { if (a.length <= 1) return [a]; const r = []; a.forEach((x, i) => permutations(a.slice(0, i).concat(a.slice(i + 1))).forEach(p => r.push([x].concat(p)))); return r; }
+  const PERMS6 = permutations([0, 1, 2, 3, 4, 5]);
+
+  // Sort every sticker into 6 groups of exactly N*N (k-means with equal group sizes)
+  function classify(rgbs, N) {
+    const n = rgbs.length, cap = n / 6, labs = rgbs.map(rgb2lab);
+    const fixed = new Int8Array(n).fill(-1);
+    let cent;
+    if (N % 2) {
+      const mid = (N - 1) / 2, S = N * N;
+      cent = [];
+      for (let f = 0; f < 6; f++) { const i = f * S + mid * N + mid; fixed[i] = f; cent.push(labs[i].slice()); }
+    } else {
+      cent = NAMES.map(nm => {
+        const g = labs.filter((l, i) => quickName(rgbs[i]) === nm);
+        return g.length ? [0, 1, 2].map(k => g.reduce((s, l) => s + l[k], 0) / g.length) : null;
+      });
+      for (let k = 0; k < 6; k++) if (!cent[k]) {
+        let best = 0, bi = 0;
+        labs.forEach((l, i) => { const d = Math.min(...cent.filter(Boolean).map(c => dist(l, c))); if (d > best) { best = d; bi = i; } });
+        cent[k] = labs[bi].slice();
+      }
+    }
+    const asg = new Int8Array(n);
+    for (let iter = 0; iter < 10; iter++) {
+      const size = [0, 0, 0, 0, 0, 0];
+      asg.fill(-1);
+      for (let i = 0; i < n; i++) if (fixed[i] >= 0) { asg[i] = fixed[i]; size[fixed[i]]++; }
+      const pairs = [];
+      for (let i = 0; i < n; i++) if (asg[i] < 0) for (let k = 0; k < 6; k++) pairs.push([dist(labs[i], cent[k]), i, k]);
+      pairs.sort((a, b) => a[0] - b[0]);
+      for (const [, i, k] of pairs) if (asg[i] < 0 && size[k] < cap) { asg[i] = k; size[k]++; }
+      // swap pairs of stickers while it helps
+      for (let pass = 0, better = true; better && pass < 25; pass++) {
+        better = false;
+        for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+          const a = asg[i], b = asg[j];
+          if (a === b || fixed[i] >= 0 || fixed[j] >= 0) continue;
+          if (dist(labs[i], cent[b]) + dist(labs[j], cent[a]) < dist(labs[i], cent[a]) + dist(labs[j], cent[b]) - 1e-6) { asg[i] = b; asg[j] = a; better = true; }
+        }
+      }
+      for (let k = 0; k < 6; k++) {
+        const g = labs.filter((l, i) => asg[i] === k);
+        cent[k] = [0, 1, 2].map(c => g.reduce((s, l) => s + l[c], 0) / g.length);
+      }
+    }
+    // name each group with the closest standard colour
+    let best = null, bestD = Infinity;
+    for (const p of PERMS6) { let d = 0; for (let k = 0; k < 6; k++) d += dist(cent[k], REF[NAMES[p[k]]]); if (d < bestD) { bestD = d; best = p; } }
+    return { labels: Array.from(asg), names: best.map(i => NAMES[i]) };
+  }
+
+  /* ---------- 3D cube view ---------- */
+  const AX = [new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1)];
+  const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+  function roundedSquare(s, r) {
+    const h = s / 2, sh = new THREE.Shape();
+    sh.moveTo(-h + r, -h); sh.lineTo(h - r, -h); sh.quadraticCurveTo(h, -h, h, -h + r);
+    sh.lineTo(h, h - r); sh.quadraticCurveTo(h, h, h - r, h); sh.lineTo(-h + r, h);
+    sh.quadraticCurveTo(-h, h, -h, h - r); sh.lineTo(-h, -h + r); sh.quadraticCurveTo(-h, -h, -h + r, -h);
+    return new THREE.ShapeGeometry(sh, 4);
+  }
+  const BOX = new THREE.BoxGeometry(0.97, 0.97, 0.97);
+  const BODY = new THREE.MeshLambertMaterial({ color: 0x22202e });
+  const STICKER = roundedSquare(0.84, 0.12);
+  const ARROW_MAT = new THREE.MeshBasicMaterial({ color: 0xc21bff });
+
+  class CubeView {
+    constructor(el, opts = {}) {
+      this.el = el; this.opts = opts;
+      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+      el.insertBefore(this.renderer.domElement, el.firstChild);
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
+      this.scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+      const light = new THREE.DirectionalLight(0xffffff, 0.5); light.position.set(4, 7, 5); this.scene.add(light);
+      this.holder = new THREE.Group(); this.root = new THREE.Group();
+      this.holder.add(this.root); this.scene.add(this.holder);
+      this.camDir = new THREE.Vector3(...(opts.camDir || [0.95, 1.05, 1.75])).normalize();
+      this.anims = []; this.dirty = true;
+      new ResizeObserver(() => this.resize()).observe(el);
+      if (opts.drag) this.enableDrag();
+      const tick = () => { requestAnimationFrame(tick); this.frame(); };
+      requestAnimationFrame(tick);
+    }
+    resize() {
+      const w = this.el.clientWidth, h = this.el.clientHeight;
+      if (!w || !h) return;
+      this.renderer.setSize(w, h);
+      this.camera.aspect = w / h;
+      this.fit();
+    }
+    fit() {
+      if (!this.N) return;
+      const rad = this.N * (this.opts.tight ? 0.88 : 0.98) + (this.opts.tight ? 0.35 : 0.75), v = THREE.MathUtils.degToRad(this.camera.fov / 2);
+      const hz = Math.atan(Math.tan(v) * this.camera.aspect);
+      const d = rad / Math.sin(Math.min(v, hz)) * (this.opts.zoom || 1);
+      this.camera.position.copy(this.camDir).multiplyScalar(d);
+      this.camera.lookAt(0, 0, 0);
+      this.camera.updateProjectionMatrix();
+      this.dirty = true;
+    }
+    frame() {
+      const now = performance.now();
+      if (this.anims.length) {
+        for (const a of this.anims.slice()) {
+          if (a.t0 === undefined) a.t0 = now;
+          const p = Math.min(1, (now - a.t0) / a.ms);
+          a.step(ease(p));
+          if (p >= 1) { this.anims.splice(this.anims.indexOf(a), 1); a.finish(); }
+        }
+        this.dirty = true;
+      }
+      if (this.dirty && this.el.offsetParent !== null) { this.renderer.render(this.scene, this.camera); this.dirty = false; }
+    }
+    build(N) {
+      this.finishAll();
+      this.N = N; this.G = C.geom(N);
+      this.root.clear();
+      this.cubies = new Map(); this.mats = []; this.arrow = null;
+      const G = this.G;
+      for (let i = 0; i < G.T; i++) {
+        const k = G.cub[i];
+        let cb = this.cubies.get(k);
+        if (!cb) {
+          const grid = k.split(',').map(Number);
+          const obj = new THREE.Mesh(BOX, BODY);
+          const home = new THREE.Vector3(grid[0] / 2, grid[1] / 2, grid[2] / 2);
+          obj.position.copy(home);
+          this.root.add(obj);
+          cb = { obj, grid, home };
+          this.cubies.set(k, cb);
+        }
+        const mat = new THREE.MeshLambertMaterial({ color: GRAY });
+        const m = new THREE.Mesh(STICKER, mat);
+        const n = G.nrm[i];
+        m.position.set(n[0] * 0.492, n[1] * 0.492, n[2] * 0.492);
+        if (n[0]) m.rotation.y = n[0] * Math.PI / 2;
+        else if (n[1]) m.rotation.x = -n[1] * Math.PI / 2;
+        else if (n[2] < 0) m.rotation.y = Math.PI;
+        cb.obj.add(m);
+        this.mats[i] = mat;
+      }
+      this.fit();
+    }
+    setColors(arr) { for (let i = 0; i < arr.length; i++) this.mats[i].color.set(arr[i]); this.dirty = true; }
+    finishAll() { while (this.anims.length) { const a = this.anims.shift(); a.step(1); a.finish(); } }
+
+    // turn one layer; `after` = colours to show once the turn is done
+    animateMove(ax, L, q, ms, after) {
+      this.finishAll();
+      return new Promise(res => {
+        const coord = 2 * L - (this.N - 1), pivot = new THREE.Group();
+        this.root.add(pivot);
+        const moving = [];
+        for (const cb of this.cubies.values()) if (cb.grid[ax] === coord) { pivot.attach(cb.obj); moving.push(cb); }
+        const target = (q === 3 ? 1 : -q) * Math.PI / 2;
+        this.anims.push({
+          ms,
+          step: p => pivot.setRotationFromAxisAngle(AX[ax], target * p),
+          finish: () => {
+            for (const cb of moving) { this.root.attach(cb.obj); cb.obj.position.copy(cb.home); cb.obj.quaternion.identity(); }
+            this.root.remove(pivot);
+            if (after) this.setColors(after);
+            res();
+          }
+        });
+      });
+    }
+    // turn the whole cube (scan guide)
+    turnWhole(axis, deg, ms) {
+      return new Promise(res => {
+        const start = this.root.quaternion.clone(), ax = AX[axis], rad = deg * Math.PI / 180, tmp = new THREE.Quaternion();
+        this.anims.push({ ms, step: p => { tmp.setFromAxisAngle(ax, rad * p); this.root.quaternion.copy(tmp).multiply(start); }, finish: res });
+      });
+    }
+    setOrientation(q) { this.finishAll(); this.root.quaternion.copy(q); this.dirty = true; }
+
+    // curved arrow around the layer, on the side you can see
+    setArrow(ax, L, q) {
+      this.clearArrow();
+      const N = this.N, w = (2 * L - (N - 1)) / 2, R = 0.8 * N + 0.35;
+      const e1 = AX[(ax + 1) % 3], e2 = AX[(ax + 2) % 3], a = AX[ax];
+      const t0 = THREE.MathUtils.degToRad(-8), t1 = THREE.MathUtils.degToRad(98);
+      const P = t => a.clone().multiplyScalar(w).addScaledVector(e1, R * Math.cos(t)).addScaledVector(e2, R * Math.sin(t));
+      const pts = []; for (let i = 0; i <= 24; i++) pts.push(P(t0 + (t1 - t0) * i / 24));
+      const g = new THREE.Group();
+      const thick = 0.07 + 0.012 * N;
+      g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 48, thick, 8), ARROW_MAT));
+      const head = (t, dirSign) => {
+        const tan = e1.clone().multiplyScalar(-Math.sin(t)).addScaledVector(e2, Math.cos(t)).multiplyScalar(dirSign).normalize();
+        const cone = new THREE.Mesh(new THREE.ConeGeometry(thick * 3, thick * 6, 16), ARROW_MAT);
+        cone.position.copy(P(t)).addScaledVector(tan, thick * 2);
+        cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), tan);
+        g.add(cone);
+      };
+      // q=1 and q=2 turn clockwise seen from +axis (towards e1); q=3 the other way
+      if (q === 3) head(t1, 1); else head(t0, -1);
+      if (q === 2) head(t0 + 0.45, -1);
+      this.arrow = g; this.root.add(g); this.dirty = true;
+    }
+    clearArrow() { if (this.arrow) { this.root.remove(this.arrow); this.arrow = null; this.dirty = true; } }
+    enableDrag() {
+      const c = this.renderer.domElement; let p = null;
+      c.style.touchAction = 'none';
+      c.addEventListener('pointerdown', e => { p = { x: e.clientX, y: e.clientY }; c.setPointerCapture(e.pointerId); });
+      c.addEventListener('pointermove', e => {
+        if (!p) return;
+        this.holder.rotation.y += (e.clientX - p.x) * 0.012;
+        this.holder.rotation.x = Math.max(-1.3, Math.min(1.3, this.holder.rotation.x + (e.clientY - p.y) * 0.012));
+        p = { x: e.clientX, y: e.clientY }; this.dirty = true;
+      });
+      const up = () => { p = null; };
+      c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up);
+    }
+    resetView() { this.holder.rotation.set(0, 0, 0); this.dirty = true; }
+  }
+
+  /* ---------- sound + little helpers ---------- */
+  let soundOn = true;
+  try { soundOn = localStorage.getItem('cb-sound') !== '0'; } catch (e) { }
+  const soundBtn = $('#soundBtn');
+  const paintSound = () => { soundBtn.textContent = soundOn ? '🔊' : '🔇'; };
+  paintSound();
+  soundBtn.onclick = () => {
+    soundOn = !soundOn; paintSound();
+    try { localStorage.setItem('cb-sound', soundOn ? '1' : '0'); } catch (e) { }
+    if (!soundOn && window.speechSynthesis) speechSynthesis.cancel(); else speak('Talking is on!');
+  };
+  function speak(text) {
+    if (!soundOn || !window.speechSynthesis) return;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g, '').replace(/[\u{1F000}-\u{1FFFF}←-⇿⬀-⯿☀-➿️]/gu, ''));
+      u.rate = 0.95; u.pitch = 1.1;
+      speechSynthesis.speak(u);
+    } catch (e) { }
+  }
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  let toastTimer = 0;
+  function toast(msg) {
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1600);
+  }
+  function modal(html, buttons) {
+    return new Promise(res => {
+      const card = $('#modalCard');
+      card.innerHTML = html + '<div class="row">' + buttons.map((b, i) => `<button class="btn ${b.cls || ''}" data-i="${i}">${b.label}</button>`).join('') + '</div>';
+      $('#modal').hidden = false;
+      card.querySelectorAll('[data-i]').forEach(el => el.onclick = () => { $('#modal').hidden = true; res(buttons[+el.dataset.i].value); });
+    });
+  }
+  function confetti() {
+    const cols = Object.values(HEX).concat(['#c21bff']);
+    for (let i = 0; i < 90; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = cols[i % cols.length];
+      c.style.animationDuration = 2 + Math.random() * 2.5 + 's';
+      c.style.animationDelay = Math.random() * 0.8 + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 5500);
+    }
+  }
+  const faceHTML = (cols, N) => `<div class="face" style="grid-template:repeat(${N},1fr)/repeat(${N},1fr)">${cols.map(c => `<i style="background:${c}"></i>`).join('')}</div>`;
+
+  // Home mini cubes
+  document.querySelectorAll('.minicube').forEach(el => {
+    const n = +el.dataset.n, cols = Object.values(HEX);
+    el.style.gridTemplate = `repeat(${n},1fr)/repeat(${n},1fr)`;
+    for (let i = 0; i < n * n; i++) { const d = document.createElement('i'); d.style.background = cols[(i * 7 + n) % 6]; el.appendChild(d); }
+  });
+
+  /* ---------- solver worker (runs the same core code off the main thread) ---------- */
+  let worker = null, reqId = 0;
+  const pending = new Map();
+  function workerMain() {
+    self.onmessage = e => {
+      const d = e.data;
+      if (d.warm) { CubeCore.warm(); if (d.N > 3) CubeCore._libs(CubeCore.geom(d.N)); return; }
+      let r;
+      try { r = CubeCore.solve(d.N, d.colors); } catch (err) { r = { ok: false, error: 'internal', detail: String(err) }; }
+      r.id = d.id;
+      self.postMessage(r);
+    };
+  }
+  try {
+    const src = $('#core').textContent + '\n;(' + workerMain.toString() + ')();';
+    worker = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+    worker.onmessage = e => { const f = pending.get(e.data.id); pending.delete(e.data.id); if (f) f(e.data); };
+    worker.onerror = () => { worker = null; for (const [id, f] of pending) { pending.delete(id); f(null); } };
+    worker.postMessage({ warm: true, N: 3 });
+  } catch (e) { worker = null; }
+  function runSolve(N, colors) {
+    const local = () => new Promise(res => setTimeout(() => { try { res(C.solve(N, colors)); } catch (e) { res({ ok: false, error: 'internal' }); } }, 60));
+    if (!worker) return local();
+    return new Promise(res => { const id = ++reqId; pending.set(id, r => r ? res(r) : local().then(res)); worker.postMessage({ id, N, colors }); });
+  }
+
+  /* ---------- app state ---------- */
+  let N = 3, G = C.geom(3);
+  let scans = [];              // scans[k] = N*N rgb colours of side k (as the camera saw it)
+  let stepMaps = [];           // stepMaps[k][cell] = sticker index
+  let labels = null, names = null;
+  let scanStep = 0, singleRescan = -1;
+  let guide = null, reviewView = null, solveView = null;
+
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+    if (id !== 'scan') stopCamera();
+    if (id !== 'solve' && sol) sol.token++;
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    window.scrollTo(0, 0);
+    [guide, reviewView, solveView].forEach(v => v && (v.dirty = true));
+  }
+  $('#homeBtn').onclick = () => { if (sol) sol.token++; show('home'); };
+
+  /* ---------- scanning order: how the cube is turned between photos ---------- */
+  const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
+  const qa = (ax, deg) => new THREE.Quaternion().setFromAxisAngle(ax, deg * Math.PI / 180);
+  // each turn = [axis, degrees] applied to the cube as you look at it
+  const TURNS = [null, [1, -90], [1, -90], [1, -90], [0, 90], [0, 180]];
+  const Q = [new THREE.Quaternion()];
+  for (let k = 1; k < 6; k++) Q.push(qa(AX[TURNS[k][0]], TURNS[k][1]).multiply(Q[k - 1].clone()));
+  const SIDE_NAMES = ['Front', 'Right', 'Back', 'Left', 'Top', 'Bottom'];
+  const SAY = [
+    'Hold your cube so one side faces the camera. <b>Remember which side is on top</b> and keep it on top!',
+    'Turn the cube to the <b>LEFT</b> ⬅️ so the right side faces the camera.',
+    'Turn it to the <b>LEFT</b> again ⬅️',
+    'And to the <b>LEFT</b> one more time ⬅️',
+    'Now <b>tip the top towards you</b> ⬇️ so the top faces the camera.',
+    'Tip it towards you <b>two more times</b> ⬇️⬇️ so the bottom faces the camera.'
+  ];
+
+  // which sticker each camera square shows, for each of the 6 photos
+  function buildStepMaps() {
+    stepMaps = Q.map(q => {
+      const inv = q.clone().invert(), out = [];
+      for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+        const p = V3(2 * c - (N - 1), -(2 * r - (N - 1)), N).applyQuaternion(inv);
+        const n = V3(0, 0, 1).applyQuaternion(inv);
+        const P = [p.x, p.y, p.z].map(Math.round), Nn = [n.x, n.y, n.z].map(Math.round);
+        out.push(G.idx.get(G.key(P, Nn)));
+      }
+      return out;
+    });
+  }
+
+  /* ---------- camera ---------- */
+  const video = $('#video'), gridEl = $('#grid');
+  let stream = null, facing = 'environment', mirrored = false, liveTimer = 0, frozen = false, torchOn = false;
+  const grab = document.createElement('canvas'), gctx = grab.getContext('2d', { willReadFrequently: true });
+
+  function buildGrid() {
+    gridEl.style.gridTemplate = `repeat(${N},1fr)/repeat(${N},1fr)`;
+    gridEl.innerHTML = '';
+    for (let i = 0; i < N * N; i++) gridEl.appendChild(Object.assign(document.createElement('div'), { innerHTML: '<i></i>' }));
+  }
+  async function startCamera() {
+    stopCamera();
+    $('#cam').querySelector('.cam-err')?.remove();
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('nocam');
+      stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: facing }, width: { ideal: 1280 }, height: { ideal: 720 } } });
+      video.srcObject = stream;
+      await video.play().catch(() => { });
+      const track = stream.getVideoTracks()[0];
+      const st = track.getSettings ? track.getSettings() : {};
+      mirrored = st.facingMode ? st.facingMode === 'user' : !/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
+      video.classList.toggle('mirror', mirrored);
+      const caps = track.getCapabilities ? track.getCapabilities() : {};
+      $('#torchBtn').hidden = !caps.torch;
+      torchOn = false;
+      clearInterval(liveTimer);
+      liveTimer = setInterval(liveTick, 180);
+    } catch (e) {
+      const secure = window.isSecureContext;
+      const box = document.createElement('div');
+      box.className = 'cam-err';
+      box.innerHTML = `<div>📷😕<br><b>I can't see through the camera.</b><br><span style="font-size:15px">${secure ? 'Ask a grown-up to allow the camera for this page, then tap Try again.' : 'The camera only works when this page is opened with https:// or from localhost.'}</span><br><br><button class="btn" id="camRetry">Try again</button></div>`;
+      $('#cam').appendChild(box);
+      $('#camRetry').onclick = startCamera;
+    }
+  }
+  function stopCamera() {
+    clearInterval(liveTimer);
+    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  }
+  // read the colour in the middle of every square
+  function sampleGrid() {
+    const vw = video.videoWidth, vh = video.videoHeight;
+    if (!vw || !vh) return null;
+    const W = $('#cam').clientWidth, H = $('#cam').clientHeight;
+    const scale = Math.max(W / vw, H / vh), ox = (W - vw * scale) / 2, oy = (H - vh * scale) / 2;
+    const k = Math.min(1, 480 / Math.min(vw, vh));
+    grab.width = Math.round(vw * k); grab.height = Math.round(vh * k);
+    gctx.drawImage(video, 0, 0, grab.width, grab.height);
+    const img = gctx.getImageData(0, 0, grab.width, grab.height).data;
+    const g = W * 0.78, gx = W * 0.11, gy = H * 0.11, cell = g / N;
+    const shown = [], face = [];
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      let px = gx + (c + 0.5) * cell;
+      const py = gy + (r + 0.5) * cell;
+      if (mirrored) px = W - px;
+      const vx = (px - ox) / scale * k, vy = (py - oy) / scale * k, rad = cell * 0.2 / scale * k;
+      const R = [], Gc = [], B = [];
+      for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) {
+        const x = Math.round(vx + dx * rad / 3), y = Math.round(vy + dy * rad / 3);
+        if (x < 0 || y < 0 || x >= grab.width || y >= grab.height) continue;
+        const o = (y * grab.width + x) * 4;
+        R.push(img[o]); Gc.push(img[o + 1]); B.push(img[o + 2]);
+      }
+      const med = a => { a.sort((p, q) => p - q); return a[a.length >> 1] || 0; };
+      const rgb = [med(R), med(Gc), med(B)];
+      shown.push(rgb);
+      face[r * N + (mirrored ? N - 1 - c : c)] = rgb;
+    }
+    return { shown, face };
+  }
+  function paintGrid(shown) {
+    const cells = gridEl.children;
+    shown.forEach((rgb, i) => { cells[i].firstChild.style.background = HEX[quickName(rgb)]; });
+  }
+  function liveTick() {
+    if (frozen || !$('#scan').classList.contains('active')) return;
+    const s = sampleGrid();
+    if (s) paintGrid(s.shown);
+  }
+  let captured = null;
+  $('#snapBtn').onclick = () => {
+    const s = sampleGrid();
+    if (!s) { toast('Camera not ready yet'); return; }
+    captured = s; frozen = true;
+    gridEl.classList.add('frozen'); paintGrid(s.shown);
+    $('#scanLive').hidden = true; $('#scanConfirm').hidden = false;
+    $('#camMsg').textContent = 'Do the colours match your cube?';
+    speak('Do the colours match your cube?');
+  };
+  $('#retakeBtn').onclick = unfreeze;
+  function unfreeze() {
+    frozen = false; gridEl.classList.remove('frozen');
+    $('#scanLive').hidden = false; $('#scanConfirm').hidden = true;
+    $('#camMsg').textContent = 'Fit the cube inside the squares';
+  }
+  $('#keepBtn').onclick = () => {
+    scans[scanStep] = captured.face;
+    unfreeze();
+    if (singleRescan >= 0) { singleRescan = -1; finishScanning(); return; }
+    if (scanStep === 5) { finishScanning(); return; }
+    gotoScanStep(scanStep + 1, true);
+  };
+  $('#torchBtn').onclick = async () => {
+    try { torchOn = !torchOn; await stream.getVideoTracks()[0].applyConstraints({ advanced: [{ torch: torchOn }] }); } catch (e) { toast('No flashlight here'); }
+  };
+  $('#flipCamBtn').onclick = () => { facing = facing === 'environment' ? 'user' : 'environment'; startCamera(); };
+
+  // paint the guide cube: scanned sides in colour, the rest grey
+  function paintGuide() {
+    const cols = new Array(G.T).fill(GRAY);
+    scans.forEach((sc, k) => { if (sc) sc.forEach((rgb, j) => { cols[stepMaps[k][j]] = HEX[quickName(rgb)]; }); });
+    guide.setColors(cols);
+  }
+  async function playGuide(k) {
+    const tk = ++playGuide.tok;
+    if (singleRescan >= 0) {
+      guide.setOrientation(Q[0]);
+      await sleep(500);
+      for (let i = 1; i <= k && tk === playGuide.tok; i++) await guide.turnWhole(TURNS[i][0], TURNS[i][1], 700);
+    } else if (k > 0) {
+      guide.setOrientation(Q[k - 1]);
+      await sleep(500);
+      if (tk === playGuide.tok) await guide.turnWhole(TURNS[k][0], TURNS[k][1], 1100);
+    } else guide.setOrientation(Q[0]);
+  }
+  playGuide.tok = 0;
+  $('#replayGuide').onclick = () => playGuide(scanStep);
+
+  function gotoScanStep(k, animate) {
+    scanStep = k;
+    $('#dots').innerHTML = SIDE_NAMES.map((_, i) => `<span class="${scans[i] ? 'done' : i === k ? 'now' : ''}"></span>`).join('');
+    $('#scanStepNo').textContent = singleRescan >= 0 ? `Scan the ${SIDE_NAMES[k].toLowerCase()} side again` : `Side ${k + 1} of 6`;
+    const say = singleRescan >= 0
+      ? 'Hold your cube like in the <b>first photo</b>, then turn it like the picture until this side faces the camera.'
+      : SAY[k];
+    $('#scanSay').innerHTML = say;
+    speak(say);
+    paintGuide();
+    if (animate) playGuide(k); else guide.setOrientation(Q[k]);
+  }
+
+  function startScan(n) {
+    N = n; G = C.geom(N); practice = false;
+    if (worker) worker.postMessage({ warm: true, N });
+    scans = []; labels = null; singleRescan = -1;
+    buildStepMaps(); buildGrid();
+    show('scan');
+    if (!guide) guide = new CubeView($('#guide3d'), { camDir: [-0.6, 0.75, 1.6], zoom: 0.92, tight: true });
+    guide.build(N);
+    unfreeze();
+    gotoScanStep(0, false);
+    startCamera();
+  }
+  document.querySelectorAll('.size').forEach(b => b.onclick = () => startScan(+b.dataset.n));
+
+  function finishScanning() {
+    stopCamera();
+    const rgbs = new Array(G.T);
+    scans.forEach((sc, k) => sc.forEach((rgb, j) => { rgbs[stepMaps[k][j]] = rgb; }));
+    const r = classify(rgbs, N);
+    labels = r.labels; names = r.names;
+    openReview();
+  }
+
+  /* ---------- review ---------- */
+  function openReview(errHTML) {
+    show('review');
+    if (!reviewView) {
+      reviewView = new CubeView($('#review3d'), { drag: true, tight: true });
+      $('#reviewReset').onclick = () => reviewView.resetView();
+    }
+    reviewView.build(N);
+    reviewView.resetView();
+    reviewView.setColors(labels.map(l => HEX[names[l]]));
+    const e = $('#reviewErr');
+    e.hidden = !errHTML; e.innerHTML = errHTML || '';
+    $('#reviewTitle').textContent = errHTML ? 'Hmm, let\'s fix something' : 'Is this your cube?';
+    $('#rescanChips').innerHTML = SIDE_NAMES.map((s, i) => `<button class="chip" data-k="${i}">${i + 1}. ${s}</button>`).join('');
+    $('#rescanChips').style.display = practice ? 'none' : '';
+    $('#restartScanBtn').style.display = practice ? 'none' : '';
+    document.querySelectorAll('#rescanChips .chip').forEach(b => b.onclick = () => rescanSide(+b.dataset.k));
+    speak(errHTML ? e.textContent : 'Is this your cube? Spin it to check.');
+  }
+  function rescanSide(k) {
+    singleRescan = k;
+    show('scan');
+    buildGrid(); unfreeze();
+    gotoScanStep(k, true);
+    startCamera();
+  }
+  $('#restartScanBtn').onclick = () => startScan(N);
+
+  const ERR = {
+    count: 'I counted the wrong number of some colours.',
+    centres: 'Two sides seem to have the <b>same centre colour</b>.',
+    corners: 'Some <b>corner</b> colours don\'t fit together.',
+    twist: 'One <b>corner</b> looks twisted. A sticker probably scanned as the wrong colour.',
+    flip: 'One <b>edge</b> looks flipped. A sticker probably scanned as the wrong colour.',
+    parity: 'Two pieces look swapped. A sticker probably scanned as the wrong colour.',
+    pieces: 'Some pieces have colours that don\'t go together.',
+    edges: 'Some <b>edge</b> colours don\'t fit together.',
+    nosolution: 'I couldn\'t find a way to solve this one.',
+    internal: 'My brain got a bit tangled.'
+  };
+  $('#solveBtn').onclick = async () => {
+    show('think');
+    const t0 = Date.now();
+    const res = await runSolve(N, labels);
+    if (Date.now() - t0 < 900) await sleep(900 - (Date.now() - t0));
+    if (!res || !res.ok) {
+      const why = ERR[(res && res.error) || 'internal'] || ERR.internal;
+      openReview(`<b>Oops!</b> ${why}<br><br>💡 Look at the cube above and find the side that doesn't match your real cube. Scan that side again in bright light, with no shiny glare. Keep the cube held the same way up.`);
+      return;
+    }
+    startSolving(res);
+  };
+
+  /* ---------- practice mode ---------- */
+  let practice = false;
+  $('#practiceBtn').onclick = async () => {
+    const n = await modal('<div class="emoji">🎮</div><h2>Pretend cube</h2><p>I\'ll mix up a cube on the screen. Follow the steps and watch it get solved!</p>',
+      [{ label: '3×3', value: 3 }, { label: '4×4', value: 4 }, { label: '5×5', value: 5 }, { label: 'Cancel', value: 0, cls: 'ghost' }]);
+    if (!n) return;
+    N = n; G = C.geom(N); practice = true;
+    let s = Uint8Array.from(G.face);
+    const mid = N % 2 ? (N - 1) / 2 : -1;
+    for (let i = 0; i < (N === 3 ? 25 : 45); i++) {
+      let m; do { m = Math.floor(Math.random() * G.moves.length); } while (G.moves[m].L === mid);
+      s = C.apply(G, s, m);
+    }
+    labels = Array.from(s);
+    names = ['white', 'red', 'green', 'yellow', 'orange', 'blue'];
+    if (worker) worker.postMessage({ warm: true, N });
+    openReview();
+    $('#reviewTitle').textContent = 'Here\'s your pretend cube!';
+  };
+
+  /* ---------- solving screen ---------- */
+  let sol = null;
+  const STAGES = {
+    0: { chip: 'Solve it!', emoji: '🚀', title: 'Let\'s solve it!', text: 'Follow the purple arrow, one turn at a time.' },
+    1: { chip: 'Make the middles', emoji: '🎯', title: 'Make the middles', text: 'First we make the middle of every side one colour.' },
+    2: { chip: 'Match the edges', emoji: '🧩', title: 'Match the edges', text: 'Now we put the edge pieces where they belong.' },
+    3: { chip: 'Finish the outside', emoji: '🏁', title: 'Finish the outside', text: 'Now your cube works just like a 3×3!' }
+  };
+  const CHEERS = ['Awesome! ⭐', 'Great job! 🌟', 'You\'re a star! ✨', 'Keep going! 💪', 'Super turning! 🎉', 'Wow, nice! 😎', 'Cube master! 🏆'];
+
+  const ord = k => ['', '', '2nd', '3rd', '4th'][k] || k + 'th';
+  function describe(ax, L, q) {
+    const n = N, hi = L >= n / 2, midL = n % 2 && L === (n - 1) / 2;
+    const k = hi ? n - L : L + 1;
+    let what, dir, icon, sub = '';
+    if (ax === 0) {
+      what = L === n - 1 ? 'the <em>RIGHT</em> side' : L === 0 ? 'the <em>LEFT</em> side' : midL ? 'the <em>MIDDLE</em> column' : `the <em>${ord(k)} column from the ${hi ? 'RIGHT' : 'LEFT'}</em>`;
+      dir = q === 3 ? 'DOWN' : 'UP'; icon = q === 3 ? '⬇️' : '⬆️';
+    } else if (ax === 1) {
+      what = L === n - 1 ? 'the <em>TOP</em> layer' : L === 0 ? 'the <em>BOTTOM</em> layer' : midL ? 'the <em>MIDDLE</em> row' : `the <em>${ord(k)} row from the ${hi ? 'TOP' : 'BOTTOM'}</em>`;
+      dir = q === 3 ? 'RIGHT' : 'LEFT'; icon = q === 3 ? '➡️' : '⬅️';
+    } else {
+      what = L === n - 1 ? 'the <em>FRONT</em> face' : L === 0 ? 'the <em>BACK</em> layer' : midL ? 'the <em>MIDDLE</em> slice' : `the <em>${ord(k)} slice from the ${hi ? 'FRONT' : 'BACK'}</em>`;
+      dir = q === 3 ? 'to the LEFT ↺' : 'to the RIGHT ↻'; icon = q === 3 ? '↺' : '↻';
+      sub = 'Turn it like a steering wheel, as you look at the front.';
+    }
+    const text = q === 2 ? `Turn ${what} <em>TWICE</em>` : `Turn ${what} ${dir}`;
+    if (q === 2) { sub = 'Half way round. Either direction is fine!'; icon = icon + '<small style="font-size:20px">×2</small>'; }
+    if (ax === 0 && L === 0 && !sub) sub = 'The front of that column goes ' + (q === 3 ? 'down.' : 'up.');
+    return { text, icon, sub };
+  }
+  function notation(ax, L, q) {
+    const n = N, hi = L >= n / 2;
+    const f = [['L', 'R'], ['D', 'U'], ['B', 'F']][ax][hi ? 1 : 0];
+    const depth = hi ? n - L : L + 1;
+    const qq = hi ? q : 4 - q;
+    return (depth > 1 ? depth : '') + f + (qq === 2 ? '2' : qq === 3 ? "'" : '');
+  }
+
+  function startSolving(res) {
+    const faceHex = res.faceColor.map(c => HEX[names[c]]);
+    const states = [Uint8Array.from(res.state)];
+    for (const [ax, L, q] of res.moves) states.push(C.apply(G, states[states.length - 1], C.mIdx(N, ax, L, q)));
+    const order = [];
+    res.moves.forEach(m => { if (!order.includes(m[3])) order.push(m[3]); });
+    sol = { moves: res.moves, states, faceHex, k: 0, token: 0, order, intro: new Set(), faceColor: res.faceColor };
+    show('solve');
+    if (!solveView) {
+      solveView = new CubeView($('#solve3d'), { drag: true });
+      $('#solveReset').onclick = () => solveView.resetView();
+    }
+    solveView.build(N);
+    solveView.resetView();
+    solveView.setColors(colorsOf(0));
+    solveView.clearArrow();
+    if (!res.moves.length) { finish(); return; }
+    holdModal().then(() => goStep(0));
+  }
+  const colorsOf = k => Array.from(sol.states[k], f => sol.faceHex[f]);
+
+  function holdModal() {
+    const s0 = sol.states[0], S = N * N;
+    const faceCols = f => Array.from(s0.slice(f * S, f * S + S), x => sol.faceHex[x]);
+    let centre = '';
+    if (N % 2) {
+      const top = names[sol.faceColor[0]], front = names[sol.faceColor[2]];
+      centre = `<p>The <span class="swatch" style="background:${HEX[top]}"></span> <b>${WORD[top]}</b> centre on top and the <span class="swatch" style="background:${HEX[front]}"></span> <b>${WORD[front]}</b> centre facing you.</p>`;
+    } else if (!practice) centre = '<p>That\'s the same way you held it for the <b>first photo</b>.</p>';
+    const say = N % 2 ? `Hold your cube with the ${WORD[names[sol.faceColor[0]]]} centre on top, and the ${WORD[names[sol.faceColor[2]]]} centre facing you.` : 'Hold your cube the same way as the first photo.';
+    speak(say + ' Only turn the part with the purple arrow.');
+    return modal(`<div class="emoji">✋</div><h2>Get ready!</h2><p>Hold your cube like this:</p>
+      <div class="hold"><div>${faceHTML(faceCols(0), N)}<b>on TOP</b></div><div>${faceHTML(faceCols(2), N)}<b>facing YOU</b></div></div>
+      ${centre}
+      <div class="note">🟣 Only turn the part with the <b>purple arrow</b>. Don't turn the whole cube around!</div>
+      <p class="small">${sol.moves.length} turns to go. Tap <b>Done!</b> after each one.</p>`,
+      [{ label: 'I\'m ready! 🚀', value: 1, cls: 'go big' }]);
+  }
+
+  async function goStep(k) {
+    const tok = ++sol.token;
+    sol.k = k;
+    if (k >= sol.moves.length) { finish(); return; }
+    const [ax, L, q, stage] = sol.moves[k];
+    solveView.finishAll();
+    solveView.setColors(colorsOf(k));
+    solveView.clearArrow();
+    const st = STAGES[stage], partNo = sol.order.indexOf(stage) + 1;
+    $('#stageChip').textContent = sol.order.length > 1 ? `Part ${partNo} of ${sol.order.length}: ${st.chip}` : st.chip;
+    $('#countTxt').textContent = `Turn ${k + 1} of ${sol.moves.length}`;
+    $('#barFill').style.width = (k / sol.moves.length * 100) + '%';
+    $('#prevBtn').disabled = k === 0;
+    $('#nextBtn').textContent = 'Done! ▶';
+    const firstOfStage = k === 0 || sol.moves[k - 1][3] !== stage;
+    if (firstOfStage && sol.order.length > 1 && !sol.intro.has(k)) {
+      sol.intro.add(k);
+      const done = k > 0 ? `<p>🎉 Part ${partNo - 1} is done. Nice work!</p>` : '';
+      speak((k > 0 ? `Part ${partNo - 1} is done. ` : '') + `Part ${partNo}. ${st.title}. ${st.text}`);
+      await modal(`<div class="emoji">${st.emoji}</div><h2>Part ${partNo}: ${st.title}</h2>${done}<p>${st.text}</p>`, [{ label: 'Let\'s go! ▶', value: 1, cls: 'go big' }]);
+      if (tok !== sol.token) return;
+    }
+    const d = describe(ax, L, q);
+    $('#mvIcon').innerHTML = d.icon;
+    $('#mvText').innerHTML = d.text;
+    $('#mvSub').textContent = d.sub;
+    $('#mvNote').textContent = notation(ax, L, q);
+    solveView.setArrow(ax, L, q);
+    speak(d.text + '.');
+    const ms = q === 2 ? 1100 : 750;
+    while (tok === sol.token) {
+      await sleep(500);
+      if (tok !== sol.token) break;
+      await solveView.animateMove(ax, L, q, ms, colorsOf(k + 1));
+      await sleep(1000);
+      if (tok !== sol.token) break;
+      solveView.setColors(colorsOf(k));
+    }
+  }
+  $('#nextBtn').onclick = () => {
+    if (!sol) return;
+    if (sol.k >= sol.moves.length) { practice = false; show('home'); return; }
+    const k = sol.k + 1;
+    if (k % 12 === 0 && k < sol.moves.length) toast(CHEERS[(k / 12) % CHEERS.length | 0]);
+    goStep(k);
+  };
+  $('#prevBtn').onclick = () => { if (sol && sol.k > 0) goStep(sol.k - 1); };
+  $('#againBtn').onclick = () => { if (sol) goStep(sol.k); };
+  $('#lostBtn').onclick = async () => {
+    if (!sol) return;
+    const v = await modal(`<div class="emoji">🤗</div><h2>No worries!</h2>
+      <p>Tap <b>◀</b> to go back and check the picture.</p>
+      <p>If your cube doesn't look like the picture any more, scan it again and I'll make a new plan.</p>`,
+      [{ label: 'Keep going', value: 0, cls: 'go' }, { label: '📷 Scan again', value: 1, cls: 'ghost' }]);
+    if (v === 1) { if (practice) show('home'); else startScan(N); }
+  };
+
+  async function finish() {
+    sol.token++;
+    solveView.finishAll();
+    solveView.clearArrow();
+    solveView.setColors(colorsOf(sol.moves.length));
+    $('#barFill').style.width = '100%';
+    $('#countTxt').textContent = 'All done!';
+    $('#mvIcon').textContent = '🏆';
+    $('#mvText').innerHTML = 'You solved it!';
+    $('#mvSub').textContent = '';
+    $('#mvNote').textContent = '';
+    $('#nextBtn').textContent = '🔁 New cube';
+    sol.k = sol.moves.length;
+    confetti();
+    speak('Hooray! You solved the cube! You are amazing!');
+    const v = await modal(`<div class="emoji">🏆</div><h2>You did it!</h2><p>Your ${N}×${N} cube is solved. You're amazing!</p>`,
+      [{ label: '🔁 Solve another', value: 1, cls: 'go' }, { label: 'Stay here', value: 0, cls: 'ghost' }]);
+    if (v) { practice = false; show('home'); }
+  }
+
+})();
+</script>
+</body>
+</html>
