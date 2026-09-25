@@ -30,13 +30,13 @@
   }
   header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: max(10px, env(safe-area-inset-top)) 16px 6px;
+    padding: max(6px, env(safe-area-inset-top)) 16px 4px;
     max-width: 560px; margin: 0 auto;
   }
-  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 22px; color: var(--brand-dark); background: none; border: 0; font-family: inherit; padding: 0; cursor: pointer; }
-  .logo .cubeicon { width: 30px; height: 30px; display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 7px; }
+  .logo { display: flex; align-items: center; gap: 7px; font-weight: 700; font-size: 18px; color: var(--brand-dark); background: none; border: 0; font-family: inherit; padding: 0; cursor: pointer; }
+  .logo .cubeicon { width: 24px; height: 24px; display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); gap: 1.5px; padding: 2.5px; background: #2d2a4a; border-radius: 7px; }
   .logo .cubeicon i { border-radius: 2px; }
-  .iconbtn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #fff; font-size: 20px; box-shadow: 0 3px 0 var(--line); cursor: pointer; }
+  .iconbtn { width: 36px; height: 36px; border-radius: 50%; border: 0; background: #fff; font-size: 17px; box-shadow: 0 3px 0 var(--line); cursor: pointer; }
   main { max-width: 560px; margin: 0 auto; padding: 0 16px calc(24px + env(safe-area-inset-bottom)); }
   .screen { display: none; animation: pop .35s ease; }
   .screen.active { display: block; }
@@ -72,9 +72,10 @@
   .center { text-align: center; }
 
   /* home */
-  .hero { text-align: center; padding: 10px 0 4px; }
-  .bot { font-size: 64px; animation: bob 2.4s ease-in-out infinite; display: inline-block; }
-  @keyframes bob { 50% { transform: translateY(-8px) rotate(-4deg); } }
+  .hero { text-align: center; padding: 6px 0 0; }
+  .hero h1 { font-size: 24px; margin: 0; }
+  .hero p { font-size: 16px; margin: 4px 0 0; color: var(--soft); }
+  #home h2 { font-size: 20px; margin: 14px 0 8px; }
   .sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .size {
     background: var(--card); border: 3px solid transparent; border-radius: var(--radius); padding: 14px 6px 12px;
@@ -86,9 +87,6 @@
   .size small { font-size: 13px; color: var(--soft); }
   .minicube { width: 64px; height: 64px; display: grid; gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 9px; }
   .minicube i { border-radius: 2px; }
-  .tips { background: rgba(255,255,255,.7); border-radius: 16px; padding: 10px 14px; margin-top: 16px; font-size: 15px; }
-  .tips summary { font-weight: 600; cursor: pointer; font-size: 16px; }
-  .tips li { margin: 6px 0; line-height: 1.35; }
 
   /* scan */
   .dots { display: flex; justify-content: center; gap: 8px; margin: 2px 0 8px; }
@@ -134,37 +132,39 @@
   @keyframes spin { 0% { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.15); } 100% { transform: rotate(360deg) scale(1); } }
 
   /* solve */
-  .topline { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 2px 0 6px; }
-  .stage { font-weight: 600; font-size: 15px; background: var(--brand); color: #fff; border-radius: 99px; padding: 5px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .topline { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 0 0 4px; }
+  .stage { font-weight: 600; font-size: 13px; background: var(--brand); color: #fff; border-radius: 99px; padding: 3px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .count { font-weight: 600; font-size: 16px; color: var(--soft); white-space: nowrap; }
-  .bar { height: 12px; background: #fff; border-radius: 99px; overflow: hidden; margin-bottom: 10px; border: 2px solid var(--line); }
+  .bar { height: 8px; background: #fff; border-radius: 99px; overflow: hidden; margin-bottom: 6px; border: 1.5px solid var(--line); }
   .bar div { height: 100%; width: 0; background: linear-gradient(90deg, #26de81, #20bf6b); border-radius: 99px; transition: width .3s; }
-  .move-card { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: var(--radius); padding: 10px 12px; margin-top: 10px; box-shadow: 0 5px 0 var(--line); min-height: 84px; }
-  .mv-icon { font-size: 34px; width: 54px; height: 54px; flex: none; display: grid; place-items: center; background: #f6e8ff; border-radius: 18px; color: #b300ff; font-weight: 700; }
-  .mv-text { font-size: 19px; font-weight: 600; line-height: 1.2; }
+  .move-card { display: flex; align-items: center; gap: 10px; background: var(--card); border-radius: 16px; padding: 7px 10px; margin-top: 8px; box-shadow: 0 3px 0 var(--line); min-height: 0; }
+  .mv-icon { font-size: 24px; width: 40px; height: 40px; flex: none; display: grid; place-items: center; background: #f6e8ff; border-radius: 12px; color: #b300ff; font-weight: 700; }
+  .mv-text { font-size: 16px; font-weight: 600; line-height: 1.2; }
   .mv-text em { font-style: normal; color: #b300ff; }
-  .mv-sub { font-size: 14px; color: var(--soft); margin-top: 3px; }
+  .mv-sub { font-size: 12.5px; color: var(--soft); margin-top: 1px; line-height: 1.25; }
   .notation { margin-left: auto; align-self: flex-start; font-size: 14px; font-weight: 600; color: var(--soft); background: #f1f0f8; border-radius: 8px; padding: 2px 8px; }
   .notation:empty { display: none; }
-  .controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; }
-  .controls .round { width: 58px; height: 58px; font-size: 24px; }
-  .controls .btn.big { min-height: 58px; font-size: 22px; padding: 12px 20px; }
-  #lostBtn { font-size: 15px; padding: 6px 4px 0; }
+  .controls { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
+  .controls .round { width: 52px; height: 52px; font-size: 22px; }
+  .controls .btn.big { min-height: 52px; font-size: 20px; padding: 10px 18px; }
+  #lostBtn { font-size: 14px; padding: 4px 4px 0; }
   .controls .btn { flex: 1; max-width: 260px; }
 
   /* modal */
   .modal { position: fixed; inset: 0; background: rgba(35,28,70,.5); display: grid; place-items: center; z-index: 50; padding: 16px; animation: fade .2s; }
   .modal[hidden] { display: none; }
   @keyframes fade { from { opacity: 0; } }
-  .modal-card { background: #fff; border-radius: 28px; padding: 22px 20px 18px; width: min(100%, 460px); max-height: 90vh; overflow: auto; text-align: center; animation: pop .3s; }
-  .modal-card h2 { margin-top: 0; font-size: 28px; }
-  .modal-card .emoji { font-size: 60px; line-height: 1; }
-  .hold { display: flex; gap: 18px; justify-content: center; margin: 12px 0; }
-  .hold > div { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 16px; }
-  .face { display: grid; gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 8px; width: 84px; height: 84px; }
+  .modal-card { background: #fff; border-radius: 24px; padding: 16px 16px 12px; width: min(100%, 460px); max-height: 90vh; overflow: auto; text-align: center; animation: pop .3s; }
+  .modal-card h2 { margin: 0 0 4px; font-size: 22px; }
+  .modal-card p { font-size: 16px; margin: 4px 0; }
+  .modal-card .row { margin: 10px 0 2px; }
+  .modal-card .emoji { font-size: 44px; line-height: 1; }
+  .hold { display: flex; gap: 16px; justify-content: center; margin: 8px 0; }
+  .hold > div { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 14px; }
+  .face { display: grid; gap: 2px; padding: 3px; background: #2d2a4a; border-radius: 8px; width: 68px; height: 68px; }
   .face i { border-radius: 2px; }
   .swatch { display: inline-block; width: 18px; height: 18px; border-radius: 5px; vertical-align: -3px; border: 1px solid #0003; }
-  .note { background: #f6e8ff; border-radius: 14px; padding: 10px 12px; font-size: 17px; margin: 10px 0; text-align: left; }
+  .note { background: #f6e8ff; border-radius: 12px; padding: 8px 10px; font-size: 15px; margin: 8px 0; text-align: left; }
 
   .toast { position: fixed; left: 50%; top: 18%; transform: translate(-50%, 0) scale(.8); background: #fff; border-radius: 99px; padding: 12px 22px; font-size: 22px; font-weight: 600; box-shadow: 0 8px 30px rgba(60,40,140,.25); opacity: 0; pointer-events: none; transition: all .3s; z-index: 60; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
@@ -178,13 +178,22 @@
   .screen.fill.active { display: flex; flex-direction: column; flex: 1; min-height: 0; }
   .camwrap { flex: 1 1 0; min-height: 110px; container-type: size; display: grid; place-items: center; margin-top: 10px; }
   .camwrap .cam { width: min(100cqw, 100cqh, 460px); margin: 0; }
-  #solve .view3d { flex: 1 1 0; min-height: 130px; height: auto; }
+  #solve .view3d, #review .view3d { flex: 1 1 0; min-height: 130px; height: auto; }
+  #review h2 { font-size: 21px; margin: 0; }
+  #review > .small { margin: 0 0 6px; font-size: 14px; }
+  #review .row { margin: 10px 0 4px; flex: none; }
+  #review .btn.big { min-height: 54px; font-size: 21px; padding: 10px 20px; }
+  #review > p.small.center { margin: 4px 0; font-size: 13px; }
+  #review .chips .chip { font-size: 13px; padding: 4px 9px; }
+  #review .link { padding: 6px 4px 0; font-size: 15px; }
+  #review .err { flex: none; max-height: 30vh; overflow: auto; font-size: 15px; padding: 8px 12px; margin: 8px 0 0; }
+  #review h2, #review > .small, #review .chips, #review > .center { flex: none; }
   .view3d canvas, .guide3d canvas { position: absolute; inset: 0; }
   .scan-actions, .controls, .move-card, .topline, .bar, .guide-row, .dots { flex: none; }
   .cam.flash::after { content: ''; position: absolute; inset: 0; background: #fff; animation: flash .4s forwards; pointer-events: none; }
   @keyframes flash { from { opacity: .85; } to { opacity: 0; } }
   .replay-badge { position: absolute; right: 4px; bottom: 4px; z-index: 1; font-size: 14px; background: #fff; border-radius: 99px; padding: 1px 5px; box-shadow: 0 1px 3px #0003; pointer-events: none; }
-  @media (max-height: 700px) {
+  @media (max-height: 640px) {
     .mv-sub { display: none; }
     .guide3d { width: 70px !important; height: 70px !important; }
     .dots { margin: 0 0 6px !important; }
@@ -206,7 +215,6 @@
   <!-- HOME -->
   <section class="screen active" id="home">
     <div class="hero">
-      <div class="bot">🤖</div>
       <h1>Hi! I'm Cube Buddy</h1>
       <p>Show me your mixed-up cube and I'll show you how to solve it, one turn at a time!</p>
     </div>
@@ -217,16 +225,6 @@
       <button class="size" data-n="5"><span class="minicube" data-n="5"></span><b>5×5</b><small>the professor</small></button>
     </div>
     <div class="center"><button class="link" id="practiceBtn">🎮 No cube with you? Try a pretend one</button></div>
-    <details class="tips">
-      <summary>👋 Tips for grown-ups</summary>
-      <ul>
-        <li>The camera only works when this page is opened from <b>https://</b> or <b>localhost</b>. Allow camera access when asked.</li>
-        <li>Scan in good, even light. Avoid shiny glare on the stickers. The 🔦 button turns on the flashlight when the phone has one.</li>
-        <li>Keep the cube held the same way up while scanning. The solving pictures use the same hold as the first photo.</li>
-        <li>4×4 and 5×5 solutions are long (a few hundred turns) because they build the cube piece by piece. Take breaks! Your place is shown on the progress bar.</li>
-        <li>The move code in the corner (like <b>R</b>, <b>U'</b>, <b>2R</b>) is standard cube notation for older kids.</li>
-      </ul>
-    </details>
   </section>
 
   <!-- SCAN -->
@@ -253,7 +251,7 @@
   </section>
 
   <!-- REVIEW -->
-  <section class="screen" id="review">
+  <section class="screen fill" id="review">
     <h2 id="reviewTitle">Is this your cube?</h2>
     <p class="small" id="reviewText">Drag the cube to spin it and check the sides.</p>
     <div class="view3d" id="review3d"><button class="chip viewreset" id="reviewReset">👀 Reset</button><span class="hint3d">👆 drag to spin</span></div>
@@ -617,21 +615,17 @@ var CubeCore = (function () {
     const wBlocks = [], wBlockKey = new Map();
     const keepOuter = new Uint8Array(T); // odd cubes: corners + middle edges must stay put in wing cycles
     if (N % 2) for (let i = 0; i < T; i++) if (!P.isCenter[i] && !(W && W.slotOf[i] >= 0)) keepOuter[i] = 1;
-    const add = (lib, M, x, y, z, seq, tag) => {
+    const add = (lib, M, x, y, z, seq, tag, loose = false) => {
       const k = tag + ':' + [x, y, z].sort((a, b) => a - b).join(',') + ':' + (x < y ? 1 : 0) + (y < z ? 1 : 0) + (z < x ? 1 : 0);
       if (seen.has(k)) return;
       seen.add(k);
-      for (const [a, b, c] of [[x, y, z], [y, z, x], [z, x, y]]) (lib[a * M + b] || (lib[a * M + b] = [])).push([c, seq]);
+      for (const [a, b, c] of [[x, y, z], [y, z, x], [z, x, y]]) (lib[a * M + b] || (lib[a * M + b] = [])).push([c, seq, loose]);
     };
-    const test = seq => {
-      for (let i = 0; i < T; i++) net[i] = i;
-      for (const m of seq) { const d = G.moves[m].dst; for (let i = 0; i < T; i++) net[i] = d[net[i]]; }
-      const cm = []; let wm = 0, ko = 0;
-      for (let i = 0; i < T; i++) if (net[i] !== i) {
-        if (P.isCenter[i]) { cm.push(i); if (cm.length > 9) return; }
-        else if (W && W.slotOf[i] >= 0) wm++;
-        else if (keepOuter[i]) ko = 1;
-      }
+    const midgeOf = i => { const f = G.face[i], r = G.row[i], c = G.col[i], h = (N - 1) / 2; return f * G.S + (r === 0 || r === N - 1 ? r * N + h : h * N + c); };
+    const ESG = N % 2 && W ? subGroup(G, 'e', i => W.slotOf[i] >= 0 || (!P.isCenter[i] && midgeOf(i) === i)) : null;
+    const pairs = [], pairKey = new Map();
+    // centre stage: exact sticker moves (3-cycles inside one orbit, or blocks of 4..9 stickers)
+    const centreEntry = (seq, cm) => {
       if (cm.length > 3) {
         const sq = merge(N, seq);
         const from = Int16Array.from(cm, i => CSG.pos[i]), to = Int16Array.from(cm, i => CSG.pos[net[i]]);
@@ -641,14 +635,24 @@ var CubeCore = (function () {
         else if (sq.length < blocks[old].seq.length) blocks[old].seq = sq;
         return;
       }
-      if (cm.length === 3) {
-        const o = cOrbitOf[cm[0]];
-        if (o < 0 || cOrbitOf[cm[1]] !== o || cOrbitOf[cm[2]] !== o) return;
-        const x = cm[0], y = net[x], z = net[y];
-        if (net[z] !== x) return;
-        const O = P.centerOrbits[o];
-        add(centerLib[o], O.slots.length, O.slotOf[x], O.slotOf[y], O.slotOf[z], merge(N, seq), 'c' + o);
-      } else if (cm.length === 0 && wm > 6 && wm <= 12 && W && !ko) {
+      const o = cOrbitOf[cm[0]];
+      if (o < 0 || cOrbitOf[cm[1]] !== o || cOrbitOf[cm[2]] !== o) return;
+      const x = cm[0], y = net[x], z = net[y];
+      if (net[z] !== x) return;
+      const O = P.centerOrbits[o];
+      add(centerLib[o], O.slots.length, O.slotOf[x], O.slotOf[y], O.slotOf[z], merge(N, seq), 'c' + o);
+    };
+    // edge stage (wings to their home spots): 3-cycles, or blocks of 4..6 wings
+    const wingEntry = (seq, wm, loose) => {
+      if (wm === 6) {
+        const moved = [];
+        W.slots.forEach((sl, k) => { if (net[sl[0]] !== sl[0]) moved.push(k); });
+        if (moved.length !== 3) return;
+        const x = moved[0], y = W.slotOf[net[W.slots[x][0]]], z = W.slotOf[net[W.slots[y][0]]];
+        if (W.slotOf[net[W.slots[z][0]]] !== x) return;
+        for (const k of [x, y, z]) { const t = W.slotOf[net[W.slots[k][0]]]; if (net[W.slots[k][1]] !== W.slots[t][1]) return; }
+        add(wingLib, W.slots.length, x, y, z, merge(N, seq), loose ? 'wl' : 'w', loose);
+      } else if (wm > 6 && wm <= 12) {
         const from = [], to = [];
         for (let k = 0; k < W.slots.length; k++) {
           const sl = W.slots[k], t = W.slotOf[net[sl[0]]];
@@ -656,18 +660,36 @@ var CubeCore = (function () {
           if (net[sl[1]] !== W.slots[t][1]) return;
           from.push(k); to.push(t);
         }
-        const sq = merge(N, seq), key = from.map((f, k) => f + '>' + to[k]).join(' ');
+        const sq = merge(N, seq), key = (loose ? 'L' : '') + from.map((f, k) => f + '>' + to[k]).join(' ');
         const old = wBlockKey.get(key);
-        if (old === undefined) { wBlockKey.set(key, wBlocks.length); wBlocks.push({ seq: sq, from: Int16Array.from(from), to: Int16Array.from(to) }); }
+        if (old === undefined) { wBlockKey.set(key, wBlocks.length); wBlocks.push({ seq: sq, from: Int16Array.from(from), to: Int16Array.from(to), loose }); }
         else if (sq.length < wBlocks[old].seq.length) wBlocks[old].seq = sq;
-      } else if (cm.length === 0 && wm === 6 && W && !ko) {
-        const moved = [];
-        W.slots.forEach((s, k) => { if (net[s[0]] !== s[0]) moved.push(k); });
-        if (moved.length !== 3) return;
-        const x = moved[0], y = W.slotOf[net[W.slots[x][0]]], z = W.slotOf[net[W.slots[y][0]]];
-        if (W.slotOf[net[W.slots[z][0]]] !== x) return;
-        for (const k of [x, y, z]) { const t = W.slotOf[net[W.slots[k][0]]]; if (net[W.slots[k][1]] !== W.slots[t][1]) return; }
-        add(wingLib, W.slots.length, x, y, z, merge(N, seq), 'w');
+      }
+    };
+    // pairing stage (odd cubes): effect on wing + middle-edge stickers; corners and middle edges may move
+    const pairEntry = (seq, loose) => {
+      const pf = [], pt = [];
+      for (let k = 0; k < ESG.list.length; k++) { const i = ESG.list[k]; if (net[i] !== i) { pf.push(k); pt.push(ESG.pos[net[i]]); } }
+      if (pf.length > 30) return;
+      const key = (loose ? 'L' : '') + pf.map((f, k) => f + '>' + pt[k]).join(' ');
+      const sq = merge(N, seq), old = pairKey.get(key);
+      if (old === undefined) { pairKey.set(key, pairs.length); pairs.push({ seq: sq, pf: Int16Array.from(pf), pt: Int16Array.from(pt), loose }); }
+      else if (sq.length < pairs[old].seq.length) pairs[old].seq = sq;
+    };
+    const test = seq => {
+      for (let i = 0; i < T; i++) net[i] = i;
+      for (const m of seq) { const d = G.moves[m].dst; for (let i = 0; i < T; i++) net[i] = d[net[i]]; }
+      const cm = []; let wm = 0, ko = 0, cross = false;
+      for (let i = 0; i < T; i++) if (net[i] !== i) {
+        if (P.isCenter[i]) { cm.push(i); if (G.face[net[i]] !== G.face[i]) cross = true; }
+        else if (W && W.slotOf[i] >= 0) wm++;
+        else if (keepOuter[i]) ko = 1;
+      }
+      if (cm.length >= 3 && cm.length <= 9) centreEntry(seq, cm);
+      // edge stages run with solved centres, so centre stickers may shuffle within their own face
+      if (W && !cross && wm > 0) {
+        if (ESG) pairEntry(seq, cm.length > 0);
+        if (!ko) wingEntry(seq, wm, cm.length > 0);
       }
     };
     for (const X of inner) {
@@ -689,6 +711,17 @@ var CubeCore = (function () {
         test([X, Y, Z, invMove(Y), Xi, Y, invMove(Z), invMove(Y)]);
       }
     }
+    for (const X of inner) {
+      const Xi = invMove(X);
+      for (const Y of outer) {
+        test([X, Y, Xi]);
+        for (const Z of outer) {
+          if (G.moves[Z].ax === G.moves[Y].ax) continue;
+          test([X, Y, Z, Xi]);
+          test([X, Y, Z, invMove(Y), Xi]);
+        }
+      }
+    }
     // [X X2, Y Z Y'] with two inner slices on one axis: moves several wings, never corners or middle edges
     for (const X of inner) for (const X2 of inner) {
       const mx = G.moves[X], m2 = G.moves[X2];
@@ -705,7 +738,7 @@ var CubeCore = (function () {
     blocks.forEach((b, bi) => b.to.forEach((y, k) => blockDst[y].push([bi, k])));
     const wBlockDst = []; if (W) for (let y = 0; y < W.slots.length; y++) wBlockDst.push([]);
     wBlocks.forEach((b, bi) => b.to.forEach((y, k) => wBlockDst[y].push([bi, k])));
-    return (libCache[N] = { centerLib, wingLib, blocks, blockDst, wBlocks, wBlockDst, all, inner, outer });
+    return (libCache[N] = { centerLib, wingLib, blocks, blockDst, wBlocks, wBlockDst, pairs, ESG, midgeOf, all, inner, outer });
   }
 
   /* =====================================================================
@@ -779,7 +812,7 @@ var CubeCore = (function () {
   function byDst(lib, M) {
     if (lib._byDst) return lib._byDst;
     const r = []; for (let y = 0; y < M; y++) r.push([]);
-    for (let x = 0; x < M; x++) for (let y = 0; y < M; y++) { const l = lib[x * M + y]; if (l) for (const [z, seq] of l) r[y].push([x, z, seq]); }
+    for (let x = 0; x < M; x++) for (let y = 0; y < M; y++) { const l = lib[x * M + y]; if (l) for (const [z, seq, loose] of l) r[y].push([x, z, seq, loose]); }
     return (lib._byDst = r);
   }
 
@@ -834,7 +867,8 @@ var CubeCore = (function () {
 
 
   // Tuning knobs (search effort vs. shorter solutions)
-  const OPT = { beamW: 1000, beamMs: 1500, trials: 6, directDepth: 3, pairW: 2, cBeam: 1, cBranch: 1, cLambda: 2.5, blocks: 1, k3ms: 300, centreMs: 3000 };
+  let global_debug = false;
+  const OPT = { beamW: 1000, beamMs: 1500, trials: 6, directDepth: 3, pairW: 2, cBeam: 1, cBranch: 1, cLambda: 2.5, blocks: 1, k3ms: 300, centreMs: 3000, fullTries: 1, totalMs: 1e9, wBeam: 1, wBranch: 1, wLambda: 3.7, tables: 1, tableNodes: 2e5, tableBeam: 3000, pairing: 1 };
 
   // Beam search on "how many stickers are right". Light scrambles get solved outright;
   // otherwise we keep the prefix that un-mixed the most for its length.
@@ -989,61 +1023,344 @@ var CubeCore = (function () {
     return done;
   }
 
-  // Wings: every step picks the setup + 3-cycle (or short direct sequence) that puts the most wings home per turn
-  function wingStage(G, s, W, Lb, directMoves) {
-    const F = G.face, M = W.slots.length, out = [];
+  // Wings: wingSteps() lists the B best next steps (setup + 3-cycle, a multi-wing block, or a short
+  // direct sequence), scored by wings put home per turn. null when every wing is home.
+  function wingSteps(G, s, W, Lb, directMoves, B) {
+    const F = G.face, M = W.slots.length;
     const dst = byDst(Lb.wingLib, M), setups = setupsFor(G, W, Lb.all);
-    const SG = directMoves.length ? subGroup(G, 'w', i => W.slotOf[i] >= 0) : null;
     const fits = (st, k, j) => st[W.slots[k][0]] === F[W.slots[j][0]] && st[W.slots[k][1]] === F[W.slots[j][1]];
-    for (let guard = 0; guard < 300; guard++) {
-      const home = []; let nh = 0;
-      for (let k = 0; k < M; k++) { home[k] = fits(s, k, k); nh += home[k]; }
-      if (nh === M) return out;
-      let best = null;
-      if (SG) {
-        const pa = W.slots.map(sl => SG.pos[sl[0]]), pb = W.slots.map(sl => SG.pos[sl[1]]);
-        const cnt = st => { let c = 0; for (let k = 0; k < M; k++) if (st[pa[k]] === SG.tgt[pa[k]] && st[pb[k]] === SG.tgt[pb[k]]) c++; return c; };
-        const d = bestDirect(G, SG, Uint8Array.from(SG.list, x => s[x]), directMoves, 3, st => cnt(st) - nh);
-        if (d) best = { score: d.score, seq: d.seq };
+    const home = []; let nh = 0;
+    for (let k = 0; k < M; k++) { home[k] = fits(s, k, k); nh += home[k]; }
+    if (nh === M) return null;
+    const top = [];
+    const offer = (sc, make) => {
+      if (top.length === B && sc <= top[B - 1].score + 1e-9) return;
+      top.push({ score: sc, make }); top.sort((x, y) => y.score - x.score);
+      if (top.length > B) top.pop();
+    };
+    if (directMoves.length) {
+      const SG = subGroup(G, 'w', i => W.slotOf[i] >= 0);
+      const pa = W.slots.map(sl => SG.pos[sl[0]]), pb = W.slots.map(sl => SG.pos[sl[1]]);
+      const cnt = st => { let c = 0; for (let k = 0; k < M; k++) if (st[pa[k]] === SG.tgt[pa[k]] && st[pb[k]] === SG.tgt[pb[k]]) c++; return c; };
+      const d = bestDirect(G, SG, Uint8Array.from(SG.list, x => s[x]), directMoves, 3, st => cnt(st) - nh);
+      if (d) offer(d.score, () => d.seq);
+    }
+    const inv = new Int16Array(M);
+    const outerOnly = sq => sq.every(m => { const L = G.moves[m].L; return L === 0 || L === G.N - 1; });
+    const evalSetup = (sq, sig) => {
+      const extra = 2 * sq.length, oo = outerOnly(sq);
+      for (let k = 0; k < M; k++) inv[sig[k]] = k;
+      for (let t = 0; t < M; t++) {
+        if (home[t]) continue;
+        for (const [xx, zz, cyc, loose] of dst[sig[t]]) {
+          if (loose && !oo) continue;
+          const a = inv[xx];
+          if (!fits(s, a, t)) continue;
+          const c = inv[zz];
+          const g = 1 + fits(s, t, c) + fits(s, c, a) - home[c];
+          if (g > 0) offer(g / (cyc.length + extra), () => sq.concat(cyc, invSeq(sq)));
+        }
       }
-      const inv = new Int16Array(M);
-      const evalSetup = (sq, sig) => {
-        const extra = 2 * sq.length;
-        for (let k = 0; k < M; k++) inv[sig[k]] = k;
+    };
+    for (let dd = 0; dd <= 2; dd++) for (const e of setups.levels[dd]) evalSetup(e.seq, e.sig);
+    if (OPT.blocks) for (let dd = 0; dd <= 1; dd++) for (const e of setups.levels[dd]) {
+      const sig = e.sig, extra = 2 * e.seq.length, oo = outerOnly(e.seq);
+      for (let k = 0; k < M; k++) inv[sig[k]] = k;
+      for (let t = 0; t < M; t++) {
+        if (home[t]) continue;
+        for (const [bi, k] of Lb.wBlockDst[sig[t]]) {
+          const b = Lb.wBlocks[bi];
+          if (b.loose && !oo) continue;
+          if (!fits(s, inv[b.from[k]], t)) continue;
+          let g = 0;
+          for (let j = 0; j < b.from.length; j++) { const pf = inv[b.from[j]], pg = inv[b.to[j]]; g += fits(s, pf, pg) - home[pg]; }
+          if (g > 0) offer(g / (b.seq.length + extra), () => e.seq.concat(b.seq, invSeq(e.seq)));
+        }
+      }
+    }
+    if (!top.length) for (const e of setups.levels[2]) for (const m of Lb.all) { if (!sameAxisSkip(G, m, e.last)) evalSetup(e.seq.concat([m]), setups.sigOf(e.sig, m)); }
+    return top.map(t => t.make());
+  }
+
+  // Keep the K most promising partial solutions (turns so far + guess for the wings left)
+  function wingStage(G, st, W, Lb, directMoves) {
+    const F = G.face, M = W.slots.length;
+    const left = s2 => { let c = 0; for (const sl of W.slots) if (s2[sl[0]] !== F[sl[0]] || s2[sl[1]] !== F[sl[1]]) c++; return c; };
+    let beam = [{ s: st, seq: [] }], done = null;
+    for (let guard = 0; guard < 300 && beam.length; guard++) {
+      const next = [];
+      for (const b of beam) {
+        const steps = wingSteps(G, b.s, W, Lb, directMoves, OPT.wBranch);
+        if (!steps) { const m = merge(G.N, b.seq); if (!done || m.length < done.length) done = m; continue; }
+        if (!steps.length) throw new Error('edge stuck');
+        for (const sq of steps) { const s2 = applySeq(G, b.s, sq); next.push({ s: s2, seq: b.seq.concat(sq), est: b.seq.length + sq.length + OPT.wLambda * left(s2) }); }
+      }
+      next.sort((x, y) => x.est - y.est);
+      const seen = new Set();
+      beam = [];
+      for (const x of next) {
+        if (done && x.seq.length >= done.length) continue;
+        const h = x.s.join('');
+        if (seen.has(h)) continue;
+        seen.add(h); beam.push(x);
+        if (beam.length >= OPT.wBeam) break;
+      }
+    }
+    if (!done) throw new Error('edge stuck');
+    return done;
+  }
+
+  /* =====================================================================
+     CENTRES BY TABLE SEARCH (big cubes), in 3 phases:
+       1. top/bottom colours onto the top/bottom faces            (any turn)
+       2. left/right colours onto left/right, top apart from bottom (turns that keep phase 1)
+       3. every centre on its own face                             (turns that keep phase 2)
+     Each centre type (orbit) is a 24-bit mask ("which spots hold colour X"). A table per phase and
+     orbit stores the exact number of turns to reach the goal; the search uses the biggest of them.
+     ===================================================================== */
+  const Cnk2 = (n, k) => { if (k < 0 || k > n) return 0; let r = 1; for (let i = 0; i < k; i++) r = r * (n - i) / (i + 1); return Math.round(r); };
+  const POP = new Uint8Array(256); for (let i = 1; i < 256; i++) POP[i] = POP[i >> 1] + (i & 1);
+
+  // Numbering of masks made of groups: groups = [[bits, ones], ...] laid out from bit 0 upward (multiples of 8 bits)
+  function comboIndex(groups) {
+    const parts = groups.map(([n, k]) => {
+      const nb = n / 8, tabs = [];
+      for (let b = 0; b < nb; b++) {
+        const t = new Int32Array(256 * (k + 1));
+        for (let x = 0; x < 256; x++) for (let kk = 0; kk <= k; kk++) {
+          let v = 0, c = kk;
+          for (let q = 0; q < 8; q++) if (x >> q & 1) { c++; v += Cnk2(8 * b + q, c); }
+          t[x * (k + 1) + kk] = v;
+        }
+        tabs.push(t);
+      }
+      return { n, k, nb, tabs, count: Cnk2(n, k) };
+    });
+    const count = parts.reduce((a, p) => a * p.count, 1);
+    const rank = mask => {
+      let r = 0, sh = 0;
+      for (const p of parts) {
+        let g = 0, pc = 0;
+        for (let b = 0; b < p.nb; b++) { const x = (mask >>> (sh + 8 * b)) & 255; g += p.tabs[b][x * (p.k + 1) + pc]; pc += POP[x]; }
+        r = r * p.count + g; sh += p.n;
+      }
+      return r;
+    };
+    // all masks, stored by number
+    const maskOf = new Int32Array(count);
+    const lists = parts.map(p => { const l = []; for (let x = 0; x < (1 << p.n); x++) { let c = 0, y = x; while (y) { c += y & 1; y >>>= 1; } if (c === p.k) l.push(x); } return l; });
+    const fill = (g, sh, acc) => {
+      if (g === parts.length) { maskOf[rank(acc)] = acc; return; }
+      for (const x of lists[g]) fill(g + 1, sh + parts[g].n, acc | (x << sh));
+    };
+    fill(0, 0, 0);
+    return { rank, count, maskOf };
+  }
+
+  const ctCache = {};
+  function centreTables(G) {
+    if (ctCache[G.N]) return ctCache[G.N];
+    const N = G.N, P = pieces(G), mid = N % 2 ? (N - 1) / 2 : -1;
+    const outer = [], inner = [];
+    for (let ax = 0; ax < 3; ax++) for (let L = 0; L < N; L++) for (let q = 1; q <= 3; q++) {
+      if (L === mid) continue;
+      (L === 0 || L === N - 1 ? outer : inner).push(mIdx(N, ax, L, q));
+    }
+    const moveSets = [
+      outer.concat(inner),
+      outer.concat(inner.filter(m => G.moves[m].ax === 1 || G.moves[m].q === 2)),
+      outer.concat(inner.filter(m => G.moves[m].q === 2))
+    ];
+    // per phase: which faces go first in the bit layout, and which colour sets a bit
+    const layouts = [
+      { faces: [[0, 1, 2, 3, 4, 5]], groups: [[24, 8]], bit: (face, col) => col === 0 || col === 3 },
+      { faces: [[1, 2, 4, 5], [0, 3]], groups: [[16, 8], [8, 4]], bit: (face, col) => face === 0 || face === 3 ? col === 0 : col === 1 || col === 4 },
+      { faces: [[0, 3], [1, 4], [2, 5]], groups: [[8, 4], [8, 4], [8, 4]], bit: (face, col) => col === (face === 0 || face === 3 ? 0 : face === 1 || face === 4 ? 1 : 2) }
+    ];
+    const phases = layouts.map((lay, ph) => {
+      const ci = comboIndex(lay.groups), moves = moveSets[ph];
+      const orbs = P.centerOrbits.map(o => {
+        const order = [];
+        for (const fs of lay.faces) for (const sl of o.slots) if (fs.includes(G.face[sl[0]])) order.push(sl[0]);
+        const bitOf = new Int16Array(G.T).fill(-1); order.forEach((x, i) => bitOf[x] = i);
+        // turn tables: new mask = mt[m][0][byte0] | mt[m][1][byte1] | mt[m][2][byte2]
+        const mt = moves.map(m => {
+          const d = G.moves[m].dst, t = [new Int32Array(256), new Int32Array(256), new Int32Array(256)];
+          for (let b = 0; b < 3; b++) for (let x = 0; x < 256; x++) { let v = 0; for (let q = 0; q < 8; q++) if (x >> q & 1) v |= 1 << bitOf[d[order[8 * b + q]]]; t[b][x] = v; }
+          return t;
+        });
+        let goal = 0; order.forEach((x, i) => { if (lay.bit(G.face[x], G.face[x])) goal |= 1 << i; });
+        // exact distance table by breadth-first search from the goal
+        const dist = new Uint8Array(ci.count).fill(255), queue = new Int32Array(ci.count);
+        let h = 0, tl = 0; const g0 = ci.rank(goal); dist[g0] = 0; queue[tl++] = g0;
+        while (h < tl) {
+          const r = queue[h++], x = ci.maskOf[r], dn = dist[r] + 1;
+          for (const t of mt) {
+            const nr = ci.rank(t[0][x & 255] | t[1][(x >>> 8) & 255] | t[2][x >>> 16]);
+            if (dist[nr] === 255) { dist[nr] = dn; queue[tl++] = nr; }
+          }
+        }
+        const maskFrom = s => { let v = 0; order.forEach((x, i) => { if (lay.bit(G.face[x], s[x])) v |= 1 << i; }); return v; };
+        return { mt, dist, maskFrom };
+      });
+      return { ci, moves, orbs };
+    });
+    return (ctCache[N] = phases);
+  }
+
+  // Optimal search for one phase (IDA*). Returns the move list, or null past the node limit.
+  function centrePhase(G, ph, s, maxNodes) {
+    const O = ph.orbs, no = O.length, ci = ph.ci, moves = ph.moves, nm = moves.length;
+    const stack = new Int32Array(32 * no), path = [];
+    O.forEach((o, k) => stack[k] = o.maskFrom(s));
+    const hAt = base => { let h = 0; for (let k = 0; k < no; k++) { const d = O[k].dist[ci.rank(stack[base + k])]; if (d > h) h = d; } return h; };
+    let nodes = 0;
+    const dfs = (lvl, depth, last) => {
+      const base = lvl * no, h = hAt(base);
+      if (h === 0) return true;
+      if (h > depth || ++nodes > maxNodes || lvl >= 31) return false;
+      const nb = base + no;
+      for (let i = 0; i < nm; i++) {
+        const m = moves[i];
+        if (sameAxisSkip(G, m, last)) continue;
+        for (let k = 0; k < no; k++) { const t = O[k].mt[i], x = stack[base + k]; stack[nb + k] = t[0][x & 255] | t[1][(x >>> 8) & 255] | t[2][x >>> 16]; }
+        path.push(m);
+        if (dfs(lvl + 1, depth - 1, m)) return true;
+        path.pop();
+        if (nodes > maxNodes) return false;
+      }
+      return false;
+    };
+    for (let d = hAt(0); d <= 30; d++) { if (dfs(0, d, -1)) return path.slice(); if (nodes > maxNodes) return null; }
+    return null;
+  }
+
+  // Near-optimal search for one phase when the exact one is too big: keep the `width` best
+  // positions at each depth, judged by the sum of the table distances.
+  function centrePhaseBeam(G, ph, s, width, maxDepth) {
+    const O = ph.orbs, no = O.length, ci = ph.ci, moves = ph.moves, nm = moves.length;
+    const ms0 = O.map(o => o.maskFrom(s));
+    let beam = [{ ms: ms0, m: -1, up: null }];
+    const pathOf = n => { const p = []; for (; n.up; n = n.up) p.push(n.m); return p.reverse(); };
+    const hOf = ms => { let sum = 0, mx = 0; for (let k = 0; k < no; k++) { const d = O[k].dist[ci.rank(ms[k])]; sum += d; if (d > mx) mx = d; } return [sum, mx]; };
+    if (hOf(ms0)[1] === 0) return [];
+    for (let depth = 1; depth <= maxDepth; depth++) {
+      const next = [], seen = new Set();
+      for (const b of beam) for (let i = 0; i < nm; i++) {
+        const m = moves[i];
+        if (sameAxisSkip(G, m, b.m)) continue;
+        const nms = new Array(no);
+        let key = 0;
+        for (let k = 0; k < no; k++) { const t = O[k].mt[i], x = b.ms[k]; nms[k] = t[0][x & 255] | t[1][(x >>> 8) & 255] | t[2][x >>> 16]; key = key * ci.count + ci.rank(nms[k]); }
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const [sum, mx] = hOf(nms);
+        const n = { ms: nms, m, up: b, sum };
+        if (mx === 0) return pathOf(n);
+        next.push(n);
+      }
+      next.sort((x, y) => x.sum - y.sum);
+      beam = next.slice(0, width);
+    }
+    return null;
+  }
+
+  // All three phases; null if a phase gets too big (caller falls back)
+  function centresByTables(G, s, P, Lb) {
+    const phases = centreTables(G), seq = [];
+    for (let k = 0; k < 3; k++) {
+      const ph = phases[k];
+      const lim = [16, 22, 16][k];
+      // exact search works for one centre type (4x4); with two (5x5) go straight to the wide search
+      let p = (ph.orbs.length === 1 ? centrePhase(G, ph, s, OPT.tableNodes) : null) || centrePhaseBeam(G, ph, s, OPT.tableBeam, lim);
+      if (!p && k < 2) p = centrePhaseBeam(G, ph, s, OPT.tableBeam * 4, lim + 2);   // rare: look wider
+      if (!p) {
+        // the last phase can hit a combination its turns can't finish: finish step by step instead
+        if (k < 2) return null;
+        seq.push(...centreStage(G, s, [0, 3, 1, 4, 2, 5], P, Lb));
+        break;
+      }
+      s = applySeq(G, s, p); seq.push(...p);
+    }
+    return merge(G.N, seq);
+  }
+
+  function pairStage(G, st, W, Lb) {
+    const E = Lb.ESG, nE = E.list.length, M = W.slots.length, out = [];
+    // wing slot j: its two stickers and the middle-edge stickers beside them (same faces)
+    const wa = W.slots.map(sl => E.pos[sl[0]]), wb = W.slots.map(sl => E.pos[sl[1]]);
+    const ma = W.slots.map(sl => E.pos[Lb.midgeOf(sl[0])]), mb = W.slots.map(sl => E.pos[Lb.midgeOf(sl[1])]);
+    const slotOf = new Int16Array(nE).fill(-1); wa.forEach((x, j) => slotOf[x] = j);
+    // slots touched by each library entry, its inverse map, and entries by where they send a wing
+    if (!Lb._pairPrep) {
+      const touch = new Int16Array(nE); // which slots look at sticker k
+      const watchers = []; for (let k = 0; k < nE; k++) watchers.push([]);
+      for (let j = 0; j < M; j++) for (const k of [wa[j], wb[j], ma[j], mb[j]]) watchers[k].push(j);
+      const dst = []; for (let j = 0; j < M; j++) dst.push([]);
+      const prep = Lb.pairs.map((e, ei) => {
+        const pre = new Int16Array(nE); for (let k = 0; k < nE; k++) pre[k] = k;
+        e.pf.forEach((f, k) => { pre[e.pt[k]] = f; });
+        e.pf.forEach((f, k) => { if (slotOf[f] >= 0) dst[slotOf[e.pt[k]]].push([ei, slotOf[f]]); });
+        return { pre };
+      });
+      const id = new Int16Array(nE); for (let k = 0; k < nE; k++) id[k] = k;
+      const sets1 = [{ seq: [], sig: id }].concat(Lb.all.map(m => ({ seq: [m], sig: E.perms[m], last: m })));
+      Lb._pairPrep = { prep, dst, sets1, watchers };
+    }
+    const { prep, dst, sets1, watchers } = Lb._pairPrep;
+    const mark = new Int32Array(M); let stamp = 0;
+    let es = Uint8Array.from(E.list, x => st[x]);
+    const paired = j => es[wa[j]] === es[ma[j]] && es[wb[j]] === es[mb[j]];
+    const inv = new Int16Array(nE);
+    for (let guard = 0; guard < 200; guard++) {
+      const pd = []; let np = 0;
+      for (let j = 0; j < M; j++) { pd[j] = paired(j); np += pd[j]; }
+      if (np === M) return out;
+      let best = null;
+      const evalSet = (sq, sig) => {
+        const extra = 2 * sq.length, oo = sq.every(m => { const L = G.moves[m].L; return L === 0 || L === G.N - 1; });
+        for (let k = 0; k < nE; k++) inv[sig[k]] = k;
         for (let t = 0; t < M; t++) {
-          if (home[t]) continue;
-          for (const [xx, zz, cyc] of dst[sig[t]]) {
-            const a = inv[xx];
-            if (!fits(s, a, t)) continue;
-            const c = inv[zz];
-            const g = 1 + fits(s, t, c) + fits(s, c, a) - home[c];
+          if (pd[t]) continue;
+          const y = slotOf[sig[wa[t]]];
+          for (const [ei, x] of dst[y]) {
+            if (!oo && Lb.pairs[ei].loose) continue;
+            const P2 = prep[ei], pre = P2.pre;
+            // colour at physical sticker p after setup + entry + undo setup
+            const col = p => es[inv[pre[sig[p]]]];
+            if (col(wa[t]) !== col(ma[t]) || col(wb[t]) !== col(mb[t])) continue;
+            // slots that look at a sticker this step moves (found from the real positions)
+            let g = 0; stamp++;
+            const pt = Lb.pairs[ei].pt;
+            for (let q = 0; q < pt.length; q++) for (const j of watchers[inv[pt[q]]]) {
+              if (mark[j] === stamp) continue;
+              mark[j] = stamp;
+              g += (col(wa[j]) === col(ma[j]) && col(wb[j]) === col(mb[j])) - pd[j];
+            }
             if (g <= 0) continue;
-            const sc = g / (cyc.length + extra);
-            if (!best || sc > best.score + 1e-9) best = { score: sc, setup: sq, cyc };
+            const sc = g / (Lb.pairs[ei].seq.length + extra);
+            if (!best || sc > best.score + 1e-9) best = { score: sc, setup: sq, cyc: Lb.pairs[ei].seq };
           }
         }
       };
-      for (let dd = 0; dd <= 2; dd++) for (const e of setups.levels[dd]) evalSetup(e.seq, e.sig);
-      if (OPT.blocks) for (let dd = 0; dd <= 1; dd++) for (const e of setups.levels[dd]) {
-        const sig = e.sig, extra = 2 * e.seq.length;
-        for (let k = 0; k < M; k++) inv[sig[k]] = k;
-        for (let t = 0; t < M; t++) {
-          if (home[t]) continue;
-          for (const [bi, k] of Lb.wBlockDst[sig[t]]) {
-            const b = Lb.wBlocks[bi];
-            if (!fits(s, inv[b.from[k]], t)) continue;
-            let g = 0;
-            for (let j = 0; j < b.from.length; j++) { const pf = inv[b.from[j]], pg = inv[b.to[j]]; g += fits(s, pf, pg) - home[pg]; }
-            if (g <= 0) continue;
-            const sc = g / (b.seq.length + extra);
-            if (!best || sc > best.score + 1e-9) best = { score: sc, setup: e.seq, cyc: b.seq };
-          }
+      for (const e of sets1) evalSet(e.seq, e.sig);
+      if (!best) for (const a of sets1) if (a.seq.length) for (const m of Lb.all) {
+        if (sameAxisSkip(G, m, a.last)) continue;
+        const sig = new Int16Array(nE), d = E.perms[m]; for (let k = 0; k < nE; k++) sig[k] = d[a.sig[k]];
+        evalSet([a.seq[0], m], sig);
+      }
+      if (!best) for (const a of sets1) if (a.seq.length) for (const m of Lb.all) {
+        if (sameAxisSkip(G, m, a.last) || best) continue;
+        const d1 = E.perms[m], sig2 = new Int16Array(nE); for (let k = 0; k < nE; k++) sig2[k] = d1[a.sig[k]];
+        for (const m2 of Lb.all) {
+          if (sameAxisSkip(G, m2, m)) continue;
+          const d2 = E.perms[m2], sig3 = new Int16Array(nE); for (let k = 0; k < nE; k++) sig3[k] = d2[sig2[k]];
+          evalSet([a.seq[0], m, m2], sig3);
         }
       }
-      if (!best) for (const e of setups.levels[2]) for (const m of Lb.all) { if (!sameAxisSkip(G, m, e.last)) evalSetup(e.seq.concat([m]), setups.sigOf(e.sig, m)); }
       if (!best) throw new Error('edge stuck');
-      const seq = best.seq || best.setup.concat(best.cyc, invSeq(best.setup));
-      s = applySeq(G, s, seq);
+      const seq = best.setup.concat(best.cyc, invSeq(best.setup));
+      for (const m of seq) es = applySub(E, es, m);
       out.push(...seq);
     }
     throw new Error('edge stuck');
@@ -1051,7 +1368,7 @@ var CubeCore = (function () {
 
   function solveBig(G, st) {
     const t0 = Date.now();
-    const N = G.N, P = pieces(G), Lb = libs(G);
+    const N = G.N, P = pieces(G), Lb = libs(G), W = P.wingOrbits[0];
     let s = st;
     const out = [];
     const push = (seq, stage) => { for (const m of seq) { s = apply(G, s, m); out.push([m, stage]); } };
@@ -1066,37 +1383,67 @@ var CubeCore = (function () {
       s = s.map(c => map[c]);
     }
 
-    // Stage 1: centres. Try starting from different faces (most-finished face first) while time allows; keep the shortest.
+    // Stage 1: centres. Try starting from different faces (most-finished face first) while time allows.
     const done = f => { let c = 0; for (let i = f * G.S; i < (f + 1) * G.S; i++) if (P.isCenter[i] && s[i] === f) c++; return c; };
-    const starts = [0, 1, 2, 3, 4, 5].sort((a, b) => done(b) - done(a));
-    let bestC = null;
-    for (let k = 0; k < Math.min(6, OPT.trials) && !(bestC && !bestC.length); k++) {
+    const starts = [0, 1, 2, 3, 4, 5].sort((x, y) => done(y) - done(x));
+    // table search first; the step-by-step way only if it didn't work
+    const cands = [];
+    if (OPT.tables) { const tc = centresByTables(G, s, P, Lb); if (tc) cands.push(tc); }
+    for (let k = 0; k < Math.min(6, OPT.trials) && !cands.length; k++) {
       const t1 = Date.now(), f0 = starts[k];
       const order = [f0, (f0 + 3) % 6].concat([0, 1, 2, 3, 4, 5].filter(f => f !== f0 && f !== (f0 + 3) % 6));
-      const seq = centreStage(G, s, order, P, Lb);
-      if (!bestC || seq.length < bestC.length) bestC = seq;
+      cands.push(centreStage(G, s, order, P, Lb));
+      if (!cands[cands.length - 1].length) break;
       if (Date.now() + (Date.now() - t1) > t0 + OPT.centreMs) break;   // next try would run past the time budget
     }
-    push(bestC, 1);
+    cands.sort((x, y) => x.length - y.length);
 
-    // Outer 3x3 (corners + middle edges). Even cubes do this last, odd cubes before the wings.
-    const solve3 = () => {
-      const fc = []; for (let i = 0; i < 54; i++) fc[i] = s[map3(N, i)];
-      const r = K.solve(fc, OPT.k3ms);
-      if (!r.ok) throw new Error('3x3:' + r.error);
-      push(r.moves.map(([f, q]) => faceMove(N, f, q)), 3);
+    // The rest after a centre solution: outer 3x3 + edges (odd cubes: 3x3 first; even cubes: edges first)
+    const rest = (s0, cseq) => {
+      let s1 = applySeq(G, s0, cseq);
+      const seq = [];
+      const add = (q, stage) => { for (const m of q) { s1 = apply(G, s1, m); seq.push([m, stage]); } };
+      const solve3 = () => {
+        const fc = []; for (let i = 0; i < 54; i++) fc[i] = s1[map3(N, i)];
+        const r = K.solve(fc, OPT.k3ms);
+        if (!r.ok) throw new Error('3x3:' + r.error);
+        add(r.moves.map(([f, q]) => faceMove(N, f, q)), 3);
+      };
+      if (N % 2 && OPT.pairing) {
+        // wing order relative to the middle edges must be even, otherwise 3-cycles can't finish it
+        const need = W.slots.map(sl => s1[Lb.midgeOf(sl[0])] + ',' + s1[Lb.midgeOf(sl[1])]);
+        const where = new Map(); need.forEach((k, j) => where.set(k, j));
+        const p = W.slots.map(sl => where.get(s1[sl[0]] + ',' + s1[sl[1]]));
+        if (p.some(x => x === undefined) || new Set(p).size !== p.length) throw new Error('edges');
+        let pairSeq = null;
+        const sp = permParity(p) ? applySeq(G, s1, parityAlg(N)) : s1;
+        try { pairSeq = pairStage(G, sp, W, Lb); } catch (e) { if (global_debug) console.log('pairing fell back'); }
+        if (pairSeq) {
+          if (permParity(p)) add(parityAlg(N), 2);
+          add(pairSeq, 2);
+          solve3();
+          return seq;
+        }
+        // rare: pairing got stuck, use the older way (3x3 first, then wings home)
+      }
+      if (N % 2) solve3();
+      const wp = wingParity(G, s1, W);
+      if (wp < 0) throw new Error('edges');
+      if (wp === 1) add(parityAlg(N), 2);
+      if (N % 2 === 0 && cornerParity(G, s1, P.corners) === 1) add([mIdx(N, 1, N - 1, 1)], 2);
+      add(wingStage(G, s1, W, Lb, N % 2 ? [] : Lb.outer.filter(m => G.moves[m].q === 2)), 2);
+      if (N % 2 === 0) solve3();
+      return seq;
     };
-    if (N % 2) solve3();
-
-    // Stage 2: edges. Fix parity first so every remaining swap is a 3-cycle.
-    const W = P.wingOrbits[0];
-    const wp = wingParity(G, s, W);
-    if (wp < 0) throw new Error('edges');
-    if (wp === 1) push(parityAlg(N), 2);
-    if (N % 2 === 0 && cornerParity(G, s, P.corners) === 1) push([mIdx(N, 1, N - 1, 1)], 2);
-    push(wingStage(G, s, W, Lb, N % 2 ? [] : Lb.outer.filter(m => G.moves[m].q === 2)), 2);
-
-    if (N % 2 === 0) solve3();
+    // finish the best few centre solutions completely and keep the shortest whole solve
+    let best = null;
+    for (let k = 0; k < cands.length && k < OPT.fullTries; k++) {
+      const t1 = Date.now();
+      const r = rest(s, cands[k]), total = merge(N, cands[k].map(m => [m, 1]).concat(r), x => x[0], (m, x) => [m, x[1]]);
+      if (!best || total.length < best.length) best = total;
+      if (Date.now() + (Date.now() - t1) > t0 + OPT.totalMs) break;
+    }
+    for (const [m, stage] of best) { s = apply(G, s, m); out.push([m, stage]); }
     return out;
   }
 
@@ -1168,7 +1515,7 @@ var CubeCore = (function () {
     };
   }
 
-  return { geom, apply, applySeq, mIdx, solve, warm: () => K.init(), _K: K, _pieces: pieces, _libs: libs, _parityAlg: parityAlg, _beam: beamUndo, OPT, _wingParity: wingParity, _cornerParity: cornerParity };
+  return { geom, apply, applySeq, mIdx, solve, warm: N => { K.init(); if (N > 3) { const G = geom(N); libs(G); centreTables(G); } }, _K: K, _pieces: pieces, _libs: libs, _parityAlg: parityAlg, _beam: beamUndo, OPT, _dbg: v => { global_debug = v; }, _ct: centreTables, _cbt: centresByTables, _wingParity: wingParity, _cornerParity: cornerParity };
 })();
 
 
@@ -1203,20 +1550,31 @@ var CubeCore = (function () {
   // brightness matters less than colour: shadows and glare change it a lot
   const dist = (a, b) => 0.35 * (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
 
-  // quick guess for the live preview dots
-  function quickName(c) {
-    const r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
-    const s = mx ? d / mx : 0;
-    if (s < 0.25 && mx > 0.35) return 'white';
-    let h = 0;
-    if (d) h = mx === r ? 60 * (((g - b) / d) % 6) : mx === g ? 60 * ((b - r) / d + 2) : 60 * ((r - g) / d + 4);
-    if (h < 0) h += 360;
-    if (h < 14 || h >= 320) return 'red';
-    if (h < 40) return 'orange';
-    if (h < 75) return 'yellow';
-    if (h < 170) return 'green';
-    if (h < 265) return 'blue';
-    return 'red';
+  // Name the colours of a group of stickers (one camera frame, or all sides together).
+  // Red and orange are told apart by hue + brightness (orange is more yellow AND brighter),
+  // split at the biggest gap when both show up, otherwise at the last split we learnt.
+  let warmSplit = 68;
+  function frameNames(rgbs) {
+    const info = rgbs.map(c => { const l = rgb2lab(c); let h = Math.atan2(l[2], l[1]) * 180 / Math.PI; if (h < -40) h += 360; return { L: l[0], C: Math.hypot(l[1], l[2]), h }; });
+    const names = new Array(rgbs.length), warm = [];
+    info.forEach((x, i) => {
+      if (x.C < 20 || (x.C < 28 && x.L > 75)) names[i] = 'white';
+      else if (x.h < 65) warm.push(i);          // red or orange (h runs from -40 upward)
+      else if (x.h < 110) names[i] = 'yellow';
+      else if (x.h < 200) names[i] = 'green';
+      else if (x.h < 320) names[i] = 'blue';
+      else warm.push(i);
+    });
+    const f = i => { const h = info[i].h >= 320 ? info[i].h - 360 : info[i].h; return h + 0.8 * info[i].L; };
+    let split = warmSplit, gapFound = false;
+    if (warm.length >= 2) {
+      const v = warm.map(f).sort((a, b) => a - b);
+      let gap = 0, at = 0;
+      for (let k = 0; k + 1 < v.length; k++) if (v[k + 1] - v[k] > gap) { gap = v[k + 1] - v[k]; at = (v[k] + v[k + 1]) / 2; }
+      if (gap >= 15) { split = at; gapFound = true; }
+    }
+    warm.forEach(i => { names[i] = f(i) < split ? 'red' : 'orange'; });
+    return { names, split, gapFound };
   }
 
   function permutations(a) { if (a.length <= 1) return [a]; const r = []; a.forEach((x, i) => permutations(a.slice(0, i).concat(a.slice(i + 1))).forEach(p => r.push([x].concat(p)))); return r; }
@@ -1232,8 +1590,9 @@ var CubeCore = (function () {
       cent = [];
       for (let f = 0; f < 6; f++) { const i = f * S + mid * N + mid; fixed[i] = f; cent.push(labs[i].slice()); }
     } else {
+      const guess = frameNames(rgbs).names;
       cent = NAMES.map(nm => {
-        const g = labs.filter((l, i) => quickName(rgbs[i]) === nm);
+        const g = labs.filter((l, i) => guess[i] === nm);
         return g.length ? [0, 1, 2].map(k => g.reduce((s, l) => s + l[k], 0) / g.length) : null;
       });
       for (let k = 0; k < 6; k++) if (!cent[k]) {
@@ -1266,8 +1625,14 @@ var CubeCore = (function () {
       }
     }
     // name each group with the closest standard colour
+    const guessAll = frameNames(rgbs).names, votes = [0, 1, 2, 3, 4, 5].map(() => ({}));
+    guessAll.forEach((nm, i) => { votes[asg[i]][nm] = (votes[asg[i]][nm] || 0) + 1; });
     let best = null, bestD = Infinity;
-    for (const p of PERMS6) { let d = 0; for (let k = 0; k < 6; k++) d += dist(cent[k], REF[NAMES[p[k]]]); if (d < bestD) { bestD = d; best = p; } }
+    for (const p of PERMS6) {
+      let d = 0;
+      for (let k = 0; k < 6; k++) d += dist(cent[k], REF[NAMES[p[k]]]) - 1000 * (votes[k][NAMES[p[k]]] || 0) / cap;
+      if (d < bestD) { bestD = d; best = p; }
+    }
     return { labels: Array.from(asg), names: best.map(i => NAMES[i]) };
   }
 
@@ -1315,7 +1680,7 @@ var CubeCore = (function () {
     }
     fit() {
       if (!this.N) return;
-      const rad = this.N * (this.opts.tight ? 0.88 : 0.98) + (this.opts.tight ? 0.35 : 0.75), v = THREE.MathUtils.degToRad(this.camera.fov / 2);
+      const rad = this.N * (this.opts.tight ? 0.88 : 0.92) + (this.opts.tight ? 0.35 : 0.45), v = THREE.MathUtils.degToRad(this.camera.fov / 2);
       const hz = Math.atan(Math.tan(v) * this.camera.aspect);
       const d = rad / Math.sin(Math.min(v, hz)) * (this.opts.zoom || 1);
       this.camera.position.copy(this.camDir).multiplyScalar(d);
@@ -1501,7 +1866,7 @@ var CubeCore = (function () {
   function workerMain() {
     self.onmessage = e => {
       const d = e.data;
-      if (d.warm) { CubeCore.warm(); if (d.N > 3) CubeCore._libs(CubeCore.geom(d.N)); return; }
+      if (d.warm) { CubeCore.warm(d.N); return; }
       let r;
       try { r = CubeCore.solve(d.N, d.colors); } catch (err) { r = { ok: false, error: 'internal', detail: String(err) }; }
       r.id = d.id;
@@ -1531,7 +1896,7 @@ var CubeCore = (function () {
 
   function show(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
-    document.body.classList.toggle('fit', id === 'scan' || id === 'solve');
+    document.body.classList.toggle('fit', id === 'scan' || id === 'solve' || id === 'review');
     if (id !== 'scan') stopCamera();
     if (id !== 'solve' && sol) sol.token++;
     if (window.speechSynthesis) speechSynthesis.cancel();
@@ -1644,7 +2009,8 @@ var CubeCore = (function () {
   }
   function paintGrid(shown) {
     const cells = gridEl.children;
-    shown.forEach((rgb, i) => { cells[i].firstChild.style.background = HEX[quickName(rgb)]; });
+    const nm = frameNames(shown).names;
+    nm.forEach((n, i) => { cells[i].firstChild.style.background = HEX[n]; });
   }
   function liveTick() {
     if (frozen || !$('#scan').classList.contains('active')) return;
@@ -1658,6 +2024,8 @@ var CubeCore = (function () {
     const s = sampleGrid();
     if (!s) { toast('Camera not ready yet'); return; }
     snapping = true; frozen = true;
+    const fr = frameNames(s.shown);
+    if (fr.gapFound) warmSplit = fr.split;
     gridEl.classList.add('frozen'); paintGrid(s.shown);
     $('#cam').classList.add('flash');
     $('#camMsg').textContent = 'Got it! ✅';
@@ -1689,7 +2057,7 @@ var CubeCore = (function () {
   // paint the guide cube: scanned sides in colour, the rest grey
   function paintGuide() {
     const cols = new Array(G.T).fill(GRAY);
-    scans.forEach((sc, k) => { if (sc) sc.forEach((rgb, j) => { cols[stepMaps[k][j]] = HEX[quickName(rgb)]; }); });
+    scans.forEach((sc, k) => { if (sc) { const nm = frameNames(sc).names; sc.forEach((rgb, j) => { cols[stepMaps[k][j]] = HEX[nm[j]]; }); } });
     guide.setColors(cols);
   }
   async function playGuide(k) {
@@ -1888,7 +2256,7 @@ var CubeCore = (function () {
     } else if (!practice) centre = '<p>That\'s the same way you held it for the <b>first photo</b>.</p>';
     const say = N % 2 ? `Hold your cube with the ${WORD[names[sol.faceColor[0]]]} centre on top, and the ${WORD[names[sol.faceColor[2]]]} centre facing you.` : 'Hold your cube the same way as the first photo.';
     speak(say + ' Only turn the part with the purple arrow.');
-    return modal(`<div class="emoji">✋</div><h2>Get ready!</h2><p>Hold your cube like this:</p>
+    return modal(`<h2>Get ready!</h2><p>Hold your cube like this:</p>
       <div class="hold"><div>${faceHTML(faceCols(0), N)}<b>on TOP</b></div><div>${faceHTML(faceCols(2), N)}<b>facing YOU</b></div></div>
       ${centre}
       <div class="note">🟣 Only turn the part with the <b>purple arrow</b>. Don't turn the whole cube around!</div>
